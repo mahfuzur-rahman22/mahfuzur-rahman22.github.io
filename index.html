@@ -326,6 +326,46 @@
     }
     .proj-link:hover { gap: 8px; }
 
+    /* ── THESIS CARD EXTRAS ── */
+    /* Make the thesis card visually heavier */
+    .project-card.thesis-card {
+      border-color: var(--border2);
+      background: linear-gradient(160deg, var(--card) 0%, #151f35 100%);
+    }
+    .project-card.thesis-card::before { opacity: 0.6; }
+
+    .thesis-blocks { display: flex; flex-direction: column; gap: 0.75rem; margin: 1rem 0; }
+    .thesis-block {
+      display: flex; gap: 0.9rem; align-items: flex-start;
+      background: var(--card2); border: 1px solid var(--border);
+      border-radius: 7px; padding: 0.7rem 1rem;
+    }
+    .tblock-label {
+      font-size: 0.68rem; font-weight: 800; text-transform: uppercase;
+      letter-spacing: 1.2px; color: var(--accent);
+      min-width: 56px; padding-top: 2px; flex-shrink: 0;
+    }
+    .tblock-text { font-size: 0.88rem; color: var(--muted); line-height: 1.75; }
+    .tblock-text strong { color: var(--text); }
+
+    .thesis-figs {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;
+      margin-top: 1.3rem;
+    }
+    @media (max-width: 600px) { .thesis-figs { grid-template-columns: 1fr; } }
+    .thesis-fig {
+      background: var(--card2); border: 1px solid var(--border);
+      border-radius: 8px; overflow: hidden;
+    }
+    .thesis-fig img {
+      width: 100%; display: block;
+      background: #fff; /* figures are on white */
+    }
+    .thesis-fig figcaption {
+      font-size: 0.72rem; color: var(--dim); padding: 0.5rem 0.75rem;
+      line-height: 1.5; border-top: 1px solid var(--border);
+    }
+
     /* ═══════════════════════════════════
        SKILLS
     ═══════════════════════════════════ */
@@ -507,6 +547,7 @@
 
   <div class="hero-actions">
     <a class="btn btn-primary" href="#interests">↓ Research Interests</a>
+    <a class="btn btn-ghost" href="assets/docs/Mahfuzur_Rahman_CV.pdf" target="_blank" download>⬇ Download CV (PDF)</a>
     <a class="btn btn-ghost" href="https://www.linkedin.com/in/mahfuzur-rahman022/" target="_blank">LinkedIn ↗</a>
     <a class="btn btn-ghost" href="https://github.com/mahfuzur-rahman22" target="_blank">GitHub ↗</a>
   </div>
@@ -647,34 +688,70 @@
   <h2 class="section-title">Projects</h2>
   <div class="section-rule"></div>
 
-  <!-- Thesis -->
-  <div class="project-card">
+  <!-- Thesis — featured card -->
+  <div class="project-card thesis-card">
     <div class="project-meta">
       <span class="status-badge complete">✓ Thesis Complete</span>
       <span class="meta-sep">·</span>
       <span class="meta-year">2025 – 2026</span>
     </div>
     <div class="project-title">Thermomechanical Behaviour of Anisotropic Metal Matrix Composite Panels</div>
-    <div class="project-role">Undergraduate Thesis · Supervisor: Dr. Shaikh Reaz Ahmed, BUET</div>
-    <div class="project-desc">
-      Developed a <strong>finite difference computational framework</strong> in MATLAB
-      to investigate thermal stress distributions in anisotropic Metal Matrix Composite (MMC)
-      panels under combined thermal and mechanical loading. The work characterises how
-      material anisotropy influences stress concentration and failure-prone zones — a
-      problem relevant to high-temperature structural components in aerospace design.
-      Results were validated against ANSYS thermal-structural simulations.
+    <div class="project-role">
+      Undergraduate Thesis &nbsp;·&nbsp;
+      Supervisor: Prof. Dr. Shaikh Reaz Ahmed, Dept. of Mechanical Engineering, BUET
     </div>
-    <div class="tag-row">
+
+    <!-- Problem → Method → Outcome in structured blocks -->
+    <div class="thesis-blocks">
+      <div class="thesis-block">
+        <span class="tblock-label">Problem</span>
+        <span class="tblock-text">How do thermal stress fields develop and concentrate in anisotropic Metal Matrix Composite (MMC) panels under combined thermo-mechanical loading — and where are failure-prone zones most likely to form?</span>
+      </div>
+      <div class="thesis-block">
+        <span class="tblock-label">Method</span>
+        <span class="tblock-text">Built a <strong>finite-difference computational framework</strong> in MATLAB from first principles to solve the coupled displacement–stress field across anisotropic composite panel geometries under prescribed thermal and mechanical boundary conditions.</span>
+      </div>
+      <div class="thesis-block">
+        <span class="tblock-label">Outcome</span>
+        <span class="tblock-text">Characterised stress concentration zones and failure-prone regions as functions of fibre volume fraction and temperature level. Results validated against ANSYS thermal–structural FEM simulations, confirming close agreement across the plate width.</span>
+      </div>
+    </div>
+
+    <!-- Figures -->
+    <div class="thesis-figs">
+      <figure class="thesis-fig">
+        <img src="assets/img/fig_validation.png"
+             alt="Figure 3.8: Axial stress distribution along the normalised plate width — FDM vs ABAQUS (FEM) comparison at the left edge and mid-length section, showing near-identical results and confirming framework validity."
+             loading="lazy" />
+        <figcaption>FDM vs. ABAQUS validation — axial stress σ<sub>xx</sub> along normalised plate width</figcaption>
+      </figure>
+      <figure class="thesis-fig">
+        <img src="assets/img/fig_stress.png"
+             alt="Figure 4.3: Lateral stress and shear stress distributions along the normalised plate width at the mid-length section for five prescribed left-end temperatures, Al–B4C MMC plate."
+             loading="lazy" />
+        <figcaption>Lateral &amp; shear stress distributions at mid-length for five temperature levels</figcaption>
+      </figure>
+    </div>
+
+    <div class="tag-row" style="margin-top:1.2rem;">
       <span class="tag">MATLAB</span>
       <span class="tag">Finite Difference Method</span>
       <span class="tag">Metal Matrix Composites</span>
       <span class="tag">Thermal Stress Analysis</span>
       <span class="tag">ANSYS Validation</span>
       <span class="tag">Anisotropic Materials</span>
+      <span class="tag">Displacement-Function Approach</span>
+    </div>
+
+    <div style="margin-top:1.4rem;">
+      <a class="btn btn-primary" href="assets/docs/Mahfuzur_Rahman_Thesis.pdf" target="_blank" download
+         style="font-size:0.85rem; padding:9px 18px;">
+        ⬇ Download Thesis (PDF)
+      </a>
     </div>
   </div>
 
-  <!-- DBF 2026 -->
+  <!-- DBF 2026 — standard card -->
   <div class="project-card">
     <div class="project-meta">
       <span class="status-badge competition">🏆 Competition · Team Lead</span>
@@ -908,6 +985,9 @@
       <a class="clink" href="https://github.com/mahfuzur-rahman22" target="_blank">
         <svg width="14" height="14" fill="currentColor" viewBox="0 0 24 24"><path d="M12 .3a12 12 0 0 0-3.79 23.4c.6.1.82-.26.82-.58v-2.02c-3.34.72-4.04-1.61-4.04-1.61-.55-1.39-1.34-1.76-1.34-1.76-1.09-.74.08-.73.08-.73 1.2.08 1.84 1.24 1.84 1.24 1.07 1.83 2.8 1.3 3.49 1 .1-.78.42-1.31.76-1.61-2.67-.3-5.47-1.33-5.47-5.93 0-1.31.47-2.38 1.24-3.22-.14-.3-.54-1.52.1-3.18 0 0 1.01-.32 3.3 1.23a11.5 11.5 0 0 1 6 0c2.29-1.55 3.3-1.23 3.3-1.23.65 1.66.24 2.88.12 3.18.77.84 1.23 1.91 1.23 3.22 0 4.61-2.81 5.63-5.48 5.92.43.37.81 1.1.81 2.22v3.29c0 .32.22.69.83.57A12 12 0 0 0 12 .3z"/></svg>
         GitHub
+      </a>
+      <a class="clink" href="assets/docs/Mahfuzur_Rahman_CV.pdf" target="_blank" download>
+        ⬇ Download CV (PDF)
       </a>
       <a class="clink">
         📍 Dhaka, Bangladesh
