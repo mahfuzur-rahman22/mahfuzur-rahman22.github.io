@@ -3,590 +3,954 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Mahfuzur Rahman | Aeronautical Engineer</title>
+  <meta name="description" content="Mahfuzur Rahman — Aeronautical Engineer specialising in computational structural mechanics, composite materials, and aerospace structures." />
+  <meta property="og:title" content="Mahfuzur Rahman — Aeronautical Engineer" />
+  <meta property="og:description" content="Aeronautical Engineer from MIST, Dhaka. Computational mechanics · Composite structures · Aerospace design." />
+  <title>Mahfuzur Rahman — Aeronautical Engineer</title>
+
   <style>
+    /* ─── TOKENS ─── */
     :root {
-      --bg: #0a0e1a;
-      --surface: #111827;
-      --card: #1a2236;
-      --border: #1e2d4a;
-      --accent: #38bdf8;
-      --accent2: #818cf8;
-      --text: #e2e8f0;
-      --muted: #94a3b8;
-      --highlight: #f0f9ff;
+      --bg:       #0a0d13;
+      --surface:  #0f1420;
+      --card:     #141b28;
+      --card2:    #1a2235;
+      --border:   #1e2d45;
+      --border2:  #243352;
+      --accent:   #4f9eff;
+      --accent2:  #7c6ef7;
+      --green:    #34d058;
+      --orange:   #f59e0b;
+      --text:     #dce8f5;
+      --muted:    #7a90aa;
+      --dim:      #3d5470;
+      --font:     'Segoe UI', system-ui, -apple-system, sans-serif;
     }
 
-    * { box-sizing: border-box; margin: 0; padding: 0; }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; font-size: 16px; }
+    body { font-family: var(--font); background: var(--bg); color: var(--text); line-height: 1.75; overflow-x: hidden; }
 
-    html { scroll-behavior: smooth; }
+    a { color: inherit; text-decoration: none; }
+    ul { list-style: none; }
+    img { max-width: 100%; display: block; }
 
-    body {
-      font-family: 'Segoe UI', system-ui, sans-serif;
-      background: var(--bg);
+    /* ─── SCROLLBAR ─── */
+    ::-webkit-scrollbar { width: 5px; }
+    ::-webkit-scrollbar-track { background: var(--bg); }
+    ::-webkit-scrollbar-thumb { background: var(--border2); border-radius: 3px; }
+
+    /* ═══════════════════════════════════
+       NAV
+    ═══════════════════════════════════ */
+    #nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 200;
+      height: 58px;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 2rem;
+      background: rgba(10,13,19,0.82);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid rgba(30,45,69,0.6);
+      transition: background 0.3s;
+    }
+    .nav-logo {
+      font-weight: 800; font-size: 1rem; letter-spacing: 0.3px;
       color: var(--text);
-      line-height: 1.7;
     }
-
-    /* ── NAV ── */
-    nav {
-      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
-      background: rgba(10,14,26,0.85);
-      backdrop-filter: blur(12px);
-      border-bottom: 1px solid var(--border);
-      display: flex; justify-content: space-between; align-items: center;
-      padding: 0 2rem; height: 60px;
+    .nav-logo span { color: var(--accent); }
+    .nav-links {
+      display: flex; gap: 1.8rem;
     }
-    .nav-brand { font-weight: 700; font-size: 1.1rem; color: var(--accent); letter-spacing: 0.5px; }
-    .nav-links { display: flex; gap: 2rem; list-style: none; }
     .nav-links a {
-      color: var(--muted); text-decoration: none; font-size: 0.9rem;
-      transition: color 0.2s;
+      font-size: 0.82rem; font-weight: 500; color: var(--muted);
+      transition: color 0.2s; letter-spacing: 0.3px;
     }
     .nav-links a:hover { color: var(--accent); }
+    .nav-cta {
+      display: inline-flex; align-items: center; gap: 6px;
+      background: var(--accent); color: #050810;
+      padding: 6px 16px; border-radius: 6px;
+      font-size: 0.8rem; font-weight: 700;
+      transition: opacity 0.2s;
+    }
+    .nav-cta:hover { opacity: 0.88; }
 
-    /* ── HERO ── */
+    /* ═══════════════════════════════════
+       HERO
+    ═══════════════════════════════════ */
     #hero {
       min-height: 100vh;
-      display: flex; align-items: center; justify-content: center;
-      padding: 80px 2rem 4rem;
-      position: relative; overflow: hidden;
+      display: flex; flex-direction: column;
+      justify-content: center;
+      padding: 120px 2rem 80px;
+      max-width: 900px; margin: 0 auto;
+      position: relative;
     }
-    .hero-bg {
-      position: absolute; inset: 0;
-      background: radial-gradient(ellipse 80% 60% at 60% 40%, rgba(56,189,248,0.08) 0%, transparent 70%),
-                  radial-gradient(ellipse 60% 50% at 20% 70%, rgba(129,140,248,0.06) 0%, transparent 70%);
-    }
-    .hero-content { position: relative; z-index: 1; max-width: 700px; }
-    .hero-tag {
-      display: inline-block;
-      background: rgba(56,189,248,0.12); border: 1px solid rgba(56,189,248,0.3);
-      color: var(--accent); border-radius: 100px; padding: 4px 14px;
-      font-size: 0.8rem; font-weight: 600; letter-spacing: 1px;
-      text-transform: uppercase; margin-bottom: 1.2rem;
-    }
-    h1 {
-      font-size: clamp(2.2rem, 5vw, 3.5rem);
-      font-weight: 800; line-height: 1.15; margin-bottom: 1rem;
-      background: linear-gradient(135deg, #e2e8f0 0%, var(--accent) 60%, var(--accent2) 100%);
-      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-    }
-    .hero-sub {
-      font-size: 1.05rem; color: var(--muted); max-width: 580px; margin-bottom: 2rem;
-    }
-    .hero-badges { display: flex; flex-wrap: wrap; gap: 0.6rem; margin-bottom: 2.4rem; }
-    .badge {
-      display: inline-flex; align-items: center; gap: 6px;
-      background: var(--card); border: 1px solid var(--border);
-      border-radius: 6px; padding: 5px 12px; font-size: 0.82rem; color: var(--muted);
-    }
-    .badge .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--accent); flex-shrink: 0; }
-    .hero-cta { display: flex; gap: 1rem; flex-wrap: wrap; }
-    .btn {
-      display: inline-flex; align-items: center; gap: 8px;
-      padding: 10px 22px; border-radius: 8px; font-size: 0.9rem;
-      font-weight: 600; text-decoration: none; transition: all 0.2s; cursor: pointer;
-    }
-    .btn-primary {
-      background: var(--accent); color: #0a0e1a;
-    }
-    .btn-primary:hover { background: #7dd3fc; transform: translateY(-1px); }
-    .btn-outline {
-      background: transparent; color: var(--text);
-      border: 1px solid var(--border);
-    }
-    .btn-outline:hover { border-color: var(--accent); color: var(--accent); transform: translateY(-1px); }
 
-    /* ── SECTIONS ── */
-    section { padding: 5rem 2rem; max-width: 960px; margin: 0 auto; }
-    .section-label {
-      font-size: 0.75rem; text-transform: uppercase; letter-spacing: 2px;
-      color: var(--accent); font-weight: 700; margin-bottom: 0.5rem;
+    /* subtle grid bg */
+    #hero::before {
+      content: '';
+      position: fixed; inset: 0; z-index: -1; pointer-events: none;
+      background-image:
+        linear-gradient(rgba(79,158,255,0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(79,158,255,0.03) 1px, transparent 1px);
+      background-size: 60px 60px;
+    }
+    /* radial glow */
+    #hero::after {
+      content: '';
+      position: fixed; inset: 0; z-index: -1; pointer-events: none;
+      background:
+        radial-gradient(ellipse 70% 55% at 55% 35%, rgba(79,158,255,0.07) 0%, transparent 65%),
+        radial-gradient(ellipse 40% 40% at 15% 75%, rgba(124,110,247,0.05) 0%, transparent 60%);
+    }
+
+    .hero-status {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: rgba(52,208,88,0.08); border: 1px solid rgba(52,208,88,0.22);
+      border-radius: 100px; padding: 5px 14px;
+      font-size: 0.78rem; font-weight: 600; color: var(--green);
+      margin-bottom: 1.6rem; width: fit-content;
+    }
+    .hero-status .pulse {
+      width: 7px; height: 7px; border-radius: 50%; background: var(--green);
+      animation: pulse 2s infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.5; transform: scale(0.8); }
+    }
+
+    .hero-name {
+      font-size: clamp(2.4rem, 5.5vw, 4rem);
+      font-weight: 800; line-height: 1.1;
+      letter-spacing: -1px; margin-bottom: 0.3rem;
+    }
+    .hero-role {
+      font-size: clamp(1rem, 2.5vw, 1.4rem);
+      font-weight: 300; color: var(--muted);
+      letter-spacing: 0.5px; margin-bottom: 1.8rem;
+    }
+    .hero-role strong { color: var(--accent); font-weight: 600; }
+
+    .hero-statement {
+      font-size: clamp(0.95rem, 1.8vw, 1.08rem);
+      color: var(--muted); max-width: 640px; line-height: 1.9;
+      margin-bottom: 2.4rem;
+      border-left: 2px solid var(--border2);
+      padding-left: 1.2rem;
+    }
+    .hero-statement strong { color: var(--text); font-weight: 600; }
+
+    .hero-tags {
+      display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 2.4rem;
+    }
+    .hero-tag {
+      background: var(--card); border: 1px solid var(--border);
+      border-radius: 5px; padding: 4px 11px;
+      font-size: 0.8rem; color: var(--muted); font-weight: 500;
+    }
+    .hero-tag.hi { border-color: rgba(79,158,255,0.3); color: var(--accent); background: rgba(79,158,255,0.06); }
+
+    .hero-actions { display: flex; flex-wrap: wrap; gap: 0.8rem; margin-bottom: 3rem; }
+    .btn {
+      display: inline-flex; align-items: center; gap: 7px;
+      padding: 10px 20px; border-radius: 7px;
+      font-size: 0.87rem; font-weight: 600;
+      transition: all 0.18s;
+    }
+    .btn-primary { background: var(--accent); color: #050810; }
+    .btn-primary:hover { filter: brightness(1.1); transform: translateY(-1px); }
+    .btn-ghost {
+      background: transparent; color: var(--text);
+      border: 1px solid var(--border2);
+    }
+    .btn-ghost:hover { border-color: var(--accent); color: var(--accent); transform: translateY(-1px); }
+
+    .hero-affils {
+      display: flex; align-items: center; gap: 1.2rem; flex-wrap: wrap;
+      padding-top: 2rem; border-top: 1px solid var(--border);
+    }
+    .hero-affils-label { font-size: 0.72rem; text-transform: uppercase; letter-spacing: 1.5px; color: var(--dim); font-weight: 600; }
+    .affil-pill {
+      background: var(--card); border: 1px solid var(--border);
+      border-radius: 5px; padding: 4px 12px;
+      font-size: 0.78rem; color: var(--muted);
+    }
+
+    /* ═══════════════════════════════════
+       SECTION WRAPPER
+    ═══════════════════════════════════ */
+    .section {
+      max-width: 900px; margin: 0 auto;
+      padding: 4.5rem 2rem;
+      border-top: 1px solid rgba(30,45,69,0.4);
+    }
+    .section-eyebrow {
+      font-size: 0.72rem; text-transform: uppercase;
+      letter-spacing: 2px; color: var(--accent);
+      font-weight: 700; margin-bottom: 0.5rem;
     }
     .section-title {
-      font-size: clamp(1.6rem, 3vw, 2.2rem); font-weight: 800;
-      margin-bottom: 0.5rem;
+      font-size: clamp(1.5rem, 3vw, 2rem);
+      font-weight: 800; letter-spacing: -0.5px; margin-bottom: 0.6rem;
     }
-    .section-line {
-      width: 48px; height: 3px;
+    .section-rule {
+      width: 40px; height: 2.5px;
       background: linear-gradient(90deg, var(--accent), var(--accent2));
       border-radius: 2px; margin-bottom: 2.5rem;
     }
+    .section-sub { font-size: 0.92rem; color: var(--muted); max-width: 560px; margin-bottom: 2.5rem; line-height: 1.8; }
 
-    /* ── ABOUT ── */
-    .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; }
-    @media(max-width:640px){ .about-grid { grid-template-columns: 1fr; } }
-    .about-text { color: var(--muted); font-size: 0.97rem; }
-    .about-text p + p { margin-top: 1rem; }
-    .stat-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
-    .stat-card {
-      background: var(--card); border: 1px solid var(--border);
-      border-radius: 10px; padding: 1.2rem; text-align: center;
+    /* ═══════════════════════════════════
+       ABOUT
+    ═══════════════════════════════════ */
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 300px;
+      gap: 3rem; align-items: start;
     }
-    .stat-num { font-size: 1.8rem; font-weight: 800; color: var(--accent); }
-    .stat-lbl { font-size: 0.78rem; color: var(--muted); margin-top: 2px; }
+    @media (max-width: 700px) { .about-grid { grid-template-columns: 1fr; } }
 
-    /* ── SKILLS ── */
-    .skills-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 1.2rem; }
-    .skill-cat {
+    .about-body { font-size: 0.93rem; color: var(--muted); line-height: 1.9; }
+    .about-body p + p { margin-top: 1rem; }
+    .about-body strong { color: var(--text); font-weight: 600; }
+    .about-body a { color: var(--accent); }
+    .about-body a:hover { text-decoration: underline; }
+
+    .about-links { display: flex; flex-direction: column; gap: 0.5rem; margin-top: 1.6rem; }
+    .about-link {
+      display: inline-flex; align-items: center; gap: 9px;
+      font-size: 0.85rem; color: var(--muted);
+      transition: color 0.2s;
+    }
+    .about-link:hover { color: var(--accent); }
+    .about-link .icon { width: 15px; text-align: center; font-size: 0.82rem; }
+
+    .about-card {
+      background: var(--card); border: 1px solid var(--border);
+      border-radius: 12px; overflow: hidden;
+    }
+    .about-photo {
+      width: 100%; aspect-ratio: 3/4; object-fit: cover;
+      background: var(--card2);
+      display: flex; align-items: center; justify-content: center;
+      color: var(--dim); font-size: 0.8rem;
+      min-height: 200px;
+    }
+    .photo-placeholder {
+      width: 100%; aspect-ratio: 3/3;
+      background: linear-gradient(135deg, var(--card2) 0%, #1a2740 100%);
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      gap: 0.5rem; color: var(--dim);
+    }
+    .photo-placeholder .avatar { font-size: 4rem; opacity: 0.4; }
+    .photo-placeholder small { font-size: 0.72rem; opacity: 0.5; }
+    .about-card-body { padding: 1.1rem; }
+    .about-card-name { font-weight: 700; font-size: 0.95rem; }
+    .about-card-role { font-size: 0.8rem; color: var(--muted); margin-bottom: 0.8rem; }
+    .about-card-item {
+      font-size: 0.78rem; color: var(--muted); padding: 4px 0;
+      border-bottom: 1px solid rgba(30,45,69,0.5);
+      display: flex; justify-content: space-between;
+    }
+    .about-card-item:last-child { border-bottom: none; }
+    .about-card-item span:last-child { color: var(--text); font-weight: 500; text-align: right; }
+
+    /* ═══════════════════════════════════
+       RESEARCH INTERESTS
+    ═══════════════════════════════════ */
+    .interests-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 1rem;
+    }
+    .interest-card {
+      background: var(--card); border: 1px solid var(--border);
+      border-radius: 10px; padding: 1.4rem;
+      transition: border-color 0.2s, transform 0.2s;
+    }
+    .interest-card:hover { border-color: var(--border2); transform: translateY(-2px); }
+    .interest-icon { font-size: 1.6rem; margin-bottom: 0.7rem; }
+    .interest-title { font-size: 0.95rem; font-weight: 700; margin-bottom: 0.4rem; }
+    .interest-desc { font-size: 0.83rem; color: var(--muted); line-height: 1.7; }
+
+    /* ═══════════════════════════════════
+       PROJECTS
+    ═══════════════════════════════════ */
+    .project-card {
+      background: var(--card); border: 1px solid var(--border);
+      border-radius: 12px; padding: 1.8rem; margin-bottom: 1.2rem;
+      transition: border-color 0.2s;
+      position: relative; overflow: hidden;
+    }
+    .project-card::before {
+      content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
+      background: linear-gradient(90deg, var(--accent), var(--accent2));
+      opacity: 0; transition: opacity 0.2s;
+    }
+    .project-card:hover { border-color: var(--border2); }
+    .project-card:hover::before { opacity: 1; }
+
+    .project-meta {
+      display: flex; align-items: center; gap: 0.6rem;
+      flex-wrap: wrap; margin-bottom: 0.7rem;
+    }
+    .status-badge {
+      display: inline-flex; align-items: center; gap: 5px;
+      border-radius: 100px; padding: 2px 10px;
+      font-size: 0.73rem; font-weight: 700; letter-spacing: 0.3px;
+    }
+    .status-badge.active { background: rgba(52,208,88,0.1); border: 1px solid rgba(52,208,88,0.25); color: var(--green); }
+    .status-badge.complete { background: rgba(79,158,255,0.1); border: 1px solid rgba(79,158,255,0.25); color: var(--accent); }
+    .status-badge.competition { background: rgba(245,158,11,0.1); border: 1px solid rgba(245,158,11,0.25); color: var(--orange); }
+    .meta-sep { color: var(--dim); }
+    .meta-year { font-size: 0.78rem; color: var(--dim); font-weight: 500; }
+
+    .project-title { font-size: 1.05rem; font-weight: 700; margin-bottom: 0.5rem; }
+    .project-role { font-size: 0.82rem; color: var(--accent); font-weight: 600; margin-bottom: 0.8rem; }
+    .project-desc { font-size: 0.9rem; color: var(--muted); line-height: 1.85; margin-bottom: 1.1rem; }
+    .project-desc strong { color: var(--text); font-weight: 600; }
+
+    .tag-row { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+    .tag {
+      background: var(--card2); border: 1px solid var(--border);
+      border-radius: 4px; padding: 2px 9px;
+      font-size: 0.76rem; color: var(--muted);
+    }
+    .proj-link {
+      display: inline-flex; align-items: center; gap: 5px;
+      color: var(--accent); font-size: 0.82rem; font-weight: 600;
+      margin-top: 1rem; transition: gap 0.15s;
+    }
+    .proj-link:hover { gap: 8px; }
+
+    /* ═══════════════════════════════════
+       SKILLS
+    ═══════════════════════════════════ */
+    .skills-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
+      gap: 1rem;
+    }
+    .skill-block {
       background: var(--card); border: 1px solid var(--border);
       border-radius: 10px; padding: 1.2rem;
     }
-    .skill-cat h4 {
-      font-size: 0.82rem; text-transform: uppercase; letter-spacing: 1px;
-      color: var(--accent); margin-bottom: 0.8rem; font-weight: 700;
+    .skill-block h4 {
+      font-size: 0.72rem; text-transform: uppercase; letter-spacing: 1.2px;
+      color: var(--accent); font-weight: 700; margin-bottom: 0.8rem;
     }
-    .skill-tag {
-      display: inline-block; background: rgba(56,189,248,0.07);
-      border: 1px solid rgba(56,189,248,0.2); border-radius: 5px;
-      padding: 2px 9px; font-size: 0.8rem; color: var(--text);
-      margin: 3px 2px;
+    .skill-chips { display: flex; flex-wrap: wrap; gap: 5px; }
+    .chip {
+      background: var(--card2); border: 1px solid var(--border);
+      border-radius: 4px; padding: 3px 9px;
+      font-size: 0.79rem; color: var(--text);
     }
 
-    /* ── PROJECTS ── */
-    .projects-grid { display: grid; gap: 1.4rem; }
-    .project-card {
-      background: var(--card); border: 1px solid var(--border);
-      border-radius: 12px; padding: 1.6rem;
-      transition: border-color 0.2s, transform 0.2s;
-    }
-    .project-card:hover { border-color: var(--accent); transform: translateY(-2px); }
-    .project-header { display: flex; justify-content: space-between; align-items: flex-start; gap: 1rem; flex-wrap: wrap; }
-    .project-title { font-size: 1.05rem; font-weight: 700; margin-bottom: 0.4rem; }
-    .project-badge {
-      background: rgba(129,140,248,0.12); border: 1px solid rgba(129,140,248,0.3);
-      color: var(--accent2); border-radius: 100px; padding: 2px 12px;
-      font-size: 0.75rem; font-weight: 600; white-space: nowrap; flex-shrink: 0;
-    }
-    .project-desc { color: var(--muted); font-size: 0.92rem; margin: 0.6rem 0 1rem; }
-    .project-tags { display: flex; flex-wrap: wrap; gap: 0.4rem; }
-    .ptag {
-      background: var(--surface); border: 1px solid var(--border);
-      border-radius: 4px; padding: 2px 8px; font-size: 0.78rem; color: var(--muted);
-    }
-    .project-link {
-      display: inline-flex; align-items: center; gap: 5px;
-      color: var(--accent); font-size: 0.82rem; text-decoration: none;
-      font-weight: 600; margin-top: 1rem;
-    }
-    .project-link:hover { text-decoration: underline; }
-
-    /* ── EXPERIENCE ── */
-    .timeline { position: relative; padding-left: 1.5rem; }
+    /* ═══════════════════════════════════
+       EXPERIENCE TIMELINE
+    ═══════════════════════════════════ */
+    .timeline { position: relative; padding-left: 1.4rem; }
     .timeline::before {
-      content: ''; position: absolute; left: 0; top: 6px; bottom: 0;
+      content: ''; position: absolute;
+      left: 0; top: 8px; bottom: 0;
       width: 1px; background: var(--border);
     }
-    .tl-item { position: relative; padding-left: 1.5rem; margin-bottom: 2.2rem; }
-    .tl-item::before {
-      content: ''; position: absolute; left: -1.5rem; top: 6px;
-      width: 9px; height: 9px; border-radius: 50%;
+    .tl-item { position: relative; padding-left: 1.8rem; margin-bottom: 2.4rem; }
+    .tl-dot {
+      position: absolute; left: -1.4rem; top: 6px;
+      width: 10px; height: 10px; border-radius: 50%;
       background: var(--accent); border: 2px solid var(--bg);
       box-shadow: 0 0 0 2px var(--accent);
     }
-    .tl-date { font-size: 0.78rem; color: var(--accent); font-weight: 600; text-transform: uppercase; letter-spacing: 0.8px; margin-bottom: 0.2rem; }
+    .tl-dot.dim { background: var(--dim); box-shadow: 0 0 0 2px var(--dim); }
+    .tl-date {
+      font-size: 0.75rem; font-weight: 600; color: var(--accent);
+      text-transform: uppercase; letter-spacing: 0.8px; margin-bottom: 0.2rem;
+    }
     .tl-title { font-size: 1rem; font-weight: 700; }
-    .tl-org { font-size: 0.88rem; color: var(--muted); margin-bottom: 0.6rem; }
-    .tl-body { font-size: 0.9rem; color: var(--muted); }
-    .tl-body li { margin-top: 0.3rem; padding-left: 1rem; position: relative; list-style: none; }
-    .tl-body li::before { content: '→'; position: absolute; left: 0; color: var(--accent); font-size: 0.8rem; }
-
-    /* ── ACHIEVEMENTS ── */
-    .ach-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(270px, 1fr)); gap: 1.2rem; }
-    .ach-card {
-      background: var(--card); border: 1px solid var(--border); border-radius: 10px;
-      padding: 1.4rem; display: flex; gap: 1rem; align-items: flex-start;
+    .tl-org { font-size: 0.85rem; color: var(--muted); margin-bottom: 0.7rem; }
+    .tl-body { font-size: 0.88rem; color: var(--muted); }
+    .tl-body li {
+      position: relative; padding-left: 1rem; margin-top: 0.3rem;
     }
-    .ach-icon { font-size: 1.8rem; flex-shrink: 0; }
-    .ach-title { font-size: 0.95rem; font-weight: 700; margin-bottom: 0.2rem; }
-    .ach-sub { font-size: 0.82rem; color: var(--muted); }
+    .tl-body li::before { content: '·'; position: absolute; left: 0; color: var(--accent); font-weight: 700; }
 
-    /* ── CONTACT ── */
-    .contact-card {
+    /* ═══════════════════════════════════
+       HONOURS
+    ═══════════════════════════════════ */
+    .honours-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(270px, 1fr));
+      gap: 1rem;
+    }
+    .honour-card {
       background: var(--card); border: 1px solid var(--border);
-      border-radius: 14px; padding: 2.5rem; text-align: center;
-      background: linear-gradient(135deg, var(--card) 0%, rgba(56,189,248,0.04) 100%);
+      border-radius: 10px; padding: 1.3rem;
+      display: flex; gap: 1rem; align-items: flex-start;
+      transition: border-color 0.2s;
     }
-    .contact-card p { color: var(--muted); max-width: 480px; margin: 0.6rem auto 2rem; font-size: 0.95rem; }
-    .contact-links { display: flex; justify-content: center; flex-wrap: wrap; gap: 1rem; margin-top: 1.5rem; }
-    .contact-link {
+    .honour-card:hover { border-color: var(--border2); }
+    .honour-icon {
+      width: 36px; height: 36px; border-radius: 8px;
+      background: var(--card2); border: 1px solid var(--border);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.1rem; flex-shrink: 0;
+    }
+    .honour-body {}
+    .honour-title { font-size: 0.9rem; font-weight: 700; margin-bottom: 0.2rem; }
+    .honour-org { font-size: 0.78rem; color: var(--accent); font-weight: 600; margin-bottom: 0.3rem; }
+    .honour-desc { font-size: 0.8rem; color: var(--muted); line-height: 1.6; }
+
+    /* ═══════════════════════════════════
+       CONTACT
+    ═══════════════════════════════════ */
+    .contact-wrap {
+      background: var(--card); border: 1px solid var(--border);
+      border-radius: 14px; padding: 3rem 2rem; text-align: center;
+    }
+    .contact-available {
       display: inline-flex; align-items: center; gap: 8px;
+      background: rgba(52,208,88,0.08); border: 1px solid rgba(52,208,88,0.22);
+      border-radius: 100px; padding: 5px 14px;
+      font-size: 0.78rem; font-weight: 600; color: var(--green);
+      margin-bottom: 1.4rem;
+    }
+    .contact-title { font-size: 1.5rem; font-weight: 800; margin-bottom: 0.7rem; }
+    .contact-sub { font-size: 0.92rem; color: var(--muted); max-width: 440px; margin: 0 auto 2rem; }
+    .contact-email {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: var(--accent); color: #050810;
+      padding: 12px 24px; border-radius: 8px;
+      font-size: 0.9rem; font-weight: 700;
+      transition: filter 0.2s;
+    }
+    .contact-email:hover { filter: brightness(1.1); }
+    .contact-links-row {
+      display: flex; justify-content: center; flex-wrap: wrap;
+      gap: 0.8rem; margin-top: 1.6rem;
+    }
+    .clink {
+      display: inline-flex; align-items: center; gap: 7px;
       background: var(--surface); border: 1px solid var(--border);
-      border-radius: 8px; padding: 10px 18px; color: var(--text);
-      text-decoration: none; font-size: 0.88rem; font-weight: 500;
-      transition: all 0.2s;
+      border-radius: 7px; padding: 9px 18px;
+      font-size: 0.85rem; font-weight: 500; color: var(--muted);
+      transition: all 0.18s;
     }
-    .contact-link:hover { border-color: var(--accent); color: var(--accent); transform: translateY(-1px); }
+    .clink:hover { border-color: var(--accent); color: var(--accent); transform: translateY(-1px); }
 
-    /* ── FOOTER ── */
+    /* ═══════════════════════════════════
+       FOOTER
+    ═══════════════════════════════════ */
     footer {
-      text-align: center; padding: 2rem;
-      color: var(--muted); font-size: 0.82rem;
-      border-top: 1px solid var(--border);
+      text-align: center; padding: 2.5rem 2rem;
+      color: var(--dim); font-size: 0.8rem;
+      border-top: 1px solid rgba(30,45,69,0.4);
     }
+    footer span { color: var(--muted); }
 
-    /* ── UTIL ── */
-    .divider { border: none; border-top: 1px solid var(--border); }
-    .text-accent { color: var(--accent); }
+    /* ═══════════════════════════════════
+       RESPONSIVE
+    ═══════════════════════════════════ */
+    @media (max-width: 640px) {
+      .nav-links { display: none; }
+      .hero-name { letter-spacing: -0.5px; }
+      .section { padding: 3rem 1.2rem; }
+    }
   </style>
 </head>
 <body>
 
-<!-- NAV -->
-<nav>
-  <span class="nav-brand">MR</span>
+<!-- ══ NAV ══ -->
+<nav id="nav">
+  <div class="nav-logo">Mahfuzur <span>Rahman</span></div>
   <ul class="nav-links">
     <li><a href="#about">About</a></li>
-    <li><a href="#skills">Skills</a></li>
+    <li><a href="#interests">Research</a></li>
     <li><a href="#projects">Projects</a></li>
     <li><a href="#experience">Experience</a></li>
+    <li><a href="#honours">Honours</a></li>
     <li><a href="#contact">Contact</a></li>
   </ul>
+  <a class="nav-cta" href="#contact">Get in Touch</a>
 </nav>
 
-<!-- HERO -->
+<!-- ══ HERO ══ -->
 <section id="hero">
-  <div class="hero-bg"></div>
-  <div class="hero-content">
-    <div class="hero-tag">🚀 Open to Opportunities</div>
-    <h1>Mahfuzur Rahman</h1>
-    <p class="hero-sub">
-      Graduate Aeronautical Engineer from MIST, Dhaka. Passionate about aerospace structures,
-      composite materials, and flight systems. CGPA 3.80/4.00 — Dean's List 2023 &amp; 2024.
-    </p>
-    <div class="hero-badges">
-      <span class="badge"><span class="dot"></span> AIAA DBF 2026 — 17th Worldwide</span>
-      <span class="badge"><span class="dot"></span> AIAA DBF 2025 — 1st in Asia</span>
-      <span class="badge"><span class="dot"></span> Thesis: MMC Thermo-Mechanics</span>
-    </div>
-    <div class="hero-cta">
-      <a class="btn btn-primary" href="#contact">Get in Touch</a>
-      <a class="btn btn-outline" href="https://www.linkedin.com/in/mahfuzur-rahman022/" target="_blank">LinkedIn ↗</a>
-      <a class="btn btn-outline" href="https://github.com/mahfuzur-rahman22" target="_blank">GitHub ↗</a>
-    </div>
+  <div class="hero-status">
+    <span class="pulse"></span>
+    Available for Research &amp; Graduate Opportunities
+  </div>
+
+  <h1 class="hero-name">Mahfuzur Rahman</h1>
+  <p class="hero-role">
+    Aeronautical Engineer ·
+    <strong>Computational Mechanics &amp; Aerospace Structures</strong> ·
+    MIST, Dhaka
+  </p>
+
+  <p class="hero-statement">
+    I am interested in how structures behave when pushed to their limits — how
+    <strong>composite materials carry load and accumulate damage</strong>,
+    how <strong>thermal gradients drive failure</strong> in aerospace components,
+    and how <strong>computational tools</strong> can be built to predict both.
+    My work sits at the intersection of materials science, structural mechanics,
+    and numerical methods — exactly where the hard aerospace problems live.
+  </p>
+
+  <div class="hero-tags">
+    <span class="hero-tag hi">Composite Mechanics</span>
+    <span class="hero-tag hi">Computational Structural Analysis</span>
+    <span class="hero-tag hi">Aerospace Structures</span>
+    <span class="hero-tag">MATLAB · ANSYS · ABAQUS</span>
+    <span class="hero-tag">FEM · FDM · Numerical Methods</span>
+    <span class="hero-tag">AIAA DBF · UAV Design</span>
+  </div>
+
+  <div class="hero-actions">
+    <a class="btn btn-primary" href="#interests">↓ Research Interests</a>
+    <a class="btn btn-ghost" href="https://www.linkedin.com/in/mahfuzur-rahman022/" target="_blank">LinkedIn ↗</a>
+    <a class="btn btn-ghost" href="https://github.com/mahfuzur-rahman22" target="_blank">GitHub ↗</a>
+  </div>
+
+  <div class="hero-affils">
+    <span class="hero-affils-label">Affiliations</span>
+    <span class="affil-pill">MIST · B.Sc. Aeronautical Eng.</span>
+    <span class="affil-pill">AIAA Student Member</span>
+    <span class="affil-pill">MAAC · VP Administration</span>
+    <span class="affil-pill">CGPA 3.80 · Dean's List ×2</span>
   </div>
 </section>
 
-<!-- ABOUT -->
-<section id="about">
-  <p class="section-label">Who I Am</p>
+<!-- ══ ABOUT ══ -->
+<section class="section" id="about">
+  <p class="section-eyebrow">Background</p>
   <h2 class="section-title">About Me</h2>
-  <div class="section-line"></div>
+  <div class="section-rule"></div>
+
   <div class="about-grid">
-    <div class="about-text">
-      <p>
-        I'm a graduate in Aeronautical Engineering from the Military Institute of Science and Technology (MIST), Dhaka.
-        Academics have always been something I took seriously — but some of my biggest growth has happened
-        outside the lecture hall.
-      </p>
-      <p>
-        I led the MIST team at the AIAA Design/Build/Fly (DBF) Competition 2026, where we ranked
-        <strong class="text-accent">18th worldwide in Proposal</strong> and
-        <strong class="text-accent">17th worldwide in Design Report</strong>.
-        The year before, as Manufacturing Lead and Flyoff Member, we finished
-        <strong class="text-accent">1st in Asia in flight mission scoring</strong> and 39th worldwide overall.
-      </p>
-      <p>
-        My undergraduate thesis focused on the thermo-mechanical behavior of anisotropic Metal Matrix Composite
-        panels — developing a finite difference computational framework to study how composite structures
-        respond under combined thermal and mechanical loading.
-      </p>
-      <p>
-        I'm working towards a career in aerospace research and education. I love problems that sit right at
-        the edge of materials science and aerospace structures.
-      </p>
-    </div>
     <div>
-      <div class="stat-grid">
-        <div class="stat-card">
-          <div class="stat-num">3.80</div>
-          <div class="stat-lbl">CGPA / 4.00</div>
-        </div>
-        <div class="stat-card">
-          <div class="stat-num">17th</div>
-          <div class="stat-lbl">Worldwide — AIAA DBF 2026</div>
-        </div>
-        <div class="stat-card">
-          <div class="stat-num">1st</div>
-          <div class="stat-lbl">Asia — Flight Mission 2025</div>
-        </div>
-        <div class="stat-card">
-          <div class="stat-num">2×</div>
-          <div class="stat-lbl">Dean's List Honouree</div>
+      <div class="about-body">
+        <p>
+          I'm a graduate in <strong>Aeronautical Engineering</strong> from the
+          Military Institute of Science and Technology (MIST), Dhaka — CGPA
+          <strong>3.80/4.00</strong>, Dean's List 2023 &amp; 2024. My academic
+          work has consistently focused on the structural and mechanical behaviour
+          of aerospace materials, culminating in an undergraduate thesis on
+          thermo-mechanical analysis of composite panels.
+        </p>
+        <p>
+          Outside coursework, I've applied that knowledge hands-on — leading
+          the MIST team at the <strong>AIAA Design/Build/Fly Competition</strong>
+          across two international cycles in Wichita and Tucson, managing the
+          full design–fabrication–flight pipeline from aerodynamics through
+          structural build. These experiences sharpened my ability to translate
+          analytical thinking into real hardware under constraints.
+        </p>
+        <p>
+          I also completed industrial training at <strong>US-Bangla Airlines</strong>,
+          working within CAMO and AMO departments on ATR 72-600 and Boeing 737-800
+          fleets — giving me grounded exposure to how airworthiness and structural
+          integrity are managed in operational aviation.
+        </p>
+        <p>
+          I'm working towards a career in <strong>aerospace research and education</strong>,
+          with particular interest in computational modelling of composite and
+          multi-material structures. If any of this resonates, I'd welcome
+          a conversation.
+        </p>
+      </div>
+      <div class="about-links">
+        <a class="about-link" href="mailto:mahfuzurrahmanmahir03@gmail.com">
+          <span class="icon">✉</span> mahfuzurrahmanmahir03@gmail.com
+        </a>
+        <a class="about-link" href="https://www.linkedin.com/in/mahfuzur-rahman022/" target="_blank">
+          <span class="icon">in</span> linkedin.com/in/mahfuzur-rahman022
+        </a>
+        <a class="about-link" href="https://github.com/mahfuzur-rahman22" target="_blank">
+          <span class="icon">gh</span> github.com/mahfuzur-rahman22
+        </a>
+        <a class="about-link">
+          <span class="icon">📍</span> Dhaka, Bangladesh
+        </a>
+      </div>
+    </div>
+
+    <div>
+      <div class="about-card">
+        <img src="IMG_6833.PNG" alt="Mahfuzur Rahman" style="width:100%;aspect-ratio:3/3;object-fit:cover;object-position:center top;display:block;" />
+        <div class="about-card-body">
+          <div class="about-card-name">Mahfuzur Rahman</div>
+          <div class="about-card-role">Graduate Aeronautical Engineer</div>
+          <div class="about-card-item"><span>Degree</span><span>B.Sc. Aeronautical Eng.</span></div>
+          <div class="about-card-item"><span>Institution</span><span>MIST, Dhaka</span></div>
+          <div class="about-card-item"><span>CGPA</span><span>3.80 / 4.00</span></div>
+          <div class="about-card-item"><span>Thesis</span><span>MMC Thermo-Mechanics</span></div>
+          <div class="about-card-item"><span>Supervisor</span><span>Dr. S. R. Ahmed, BUET</span></div>
         </div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- SKILLS -->
-<section id="skills">
-  <p class="section-label">What I Work With</p>
-  <h2 class="section-title">Technical Skills</h2>
-  <div class="section-line"></div>
-  <div class="skills-grid">
-    <div class="skill-cat">
-      <h4>Engineering Software</h4>
-      <span class="skill-tag">MATLAB</span>
-      <span class="skill-tag">ANSYS</span>
-      <span class="skill-tag">SolidWorks</span>
-      <span class="skill-tag">ABAQUS</span>
-      <span class="skill-tag">XFLR5</span>
-      <span class="skill-tag">AVL</span>
+<!-- ══ RESEARCH INTERESTS ══ -->
+<section class="section" id="interests">
+  <p class="section-eyebrow">What I Work On</p>
+  <h2 class="section-title">Research Interests</h2>
+  <div class="section-rule"></div>
+  <p class="section-sub">
+    The problems that pull me are ones where material behaviour, structural
+    mechanics, and computational modelling intersect — particularly in
+    aerospace contexts where getting it wrong is not an option.
+  </p>
+  <div class="interests-grid">
+    <div class="interest-card">
+      <div class="interest-icon">🧱</div>
+      <div class="interest-title">Composite &amp; Multi-Material Structures</div>
+      <div class="interest-desc">
+        How fibre-reinforced and metal matrix composites carry load,
+        accumulate damage, and fail — especially under combined loading
+        conditions representative of real aerospace service environments.
+      </div>
     </div>
-    <div class="skill-cat">
-      <h4>Computation &amp; Analysis</h4>
-      <span class="skill-tag">Finite Element Methods</span>
-      <span class="skill-tag">Finite Difference Methods</span>
-      <span class="skill-tag">Numerical Analysis</span>
-      <span class="skill-tag">Structural Analysis</span>
-      <span class="skill-tag">Thermal Analysis</span>
+    <div class="interest-card">
+      <div class="interest-icon">🌡️</div>
+      <div class="interest-title">Thermo-Mechanical Coupling</div>
+      <div class="interest-desc">
+        The interaction between thermal gradients and mechanical stress fields
+        in anisotropic materials — a critical design challenge for structures
+        in high-temperature aerospace and propulsion applications.
+      </div>
     </div>
-    <div class="skill-cat">
-      <h4>Aviation &amp; MRO</h4>
-      <span class="skill-tag">CAMO / AMO</span>
-      <span class="skill-tag">MEL / MCC / PPC</span>
-      <span class="skill-tag">NDT</span>
-      <span class="skill-tag">Airworthiness Directives</span>
-      <span class="skill-tag">SMS / SRM</span>
+    <div class="interest-card">
+      <div class="interest-icon">💻</div>
+      <div class="interest-title">Computational Structural Mechanics</div>
+      <div class="interest-desc">
+        Building finite difference and finite element frameworks — writing
+        numerical solvers in MATLAB, validating against FEA tools such as
+        ANSYS and ABAQUS — to study problems that resist closed-form solutions.
+      </div>
     </div>
-    <div class="skill-cat">
-      <h4>Documentation</h4>
-      <span class="skill-tag">LaTeX</span>
-      <span class="skill-tag">Microsoft Office (Advanced)</span>
-      <span class="skill-tag">Technical Writing</span>
-      <span class="skill-tag">Safety Reporting</span>
-    </div>
-    <div class="skill-cat">
-      <h4>Certifications</h4>
-      <span class="skill-tag">MATLAB Onramp — MathWorks</span>
-      <span class="skill-tag">Simulink Onramp — MathWorks</span>
-    </div>
-    <div class="skill-cat">
-      <h4>Languages</h4>
-      <span class="skill-tag">Bangla — Native</span>
-      <span class="skill-tag">English — Fluent</span>
+    <div class="interest-card">
+      <div class="interest-icon">✈️</div>
+      <div class="interest-title">Aerospace Structural Design</div>
+      <div class="interest-desc">
+        Applying structural and aerodynamic analysis to real airframe design —
+        balancing weight, stiffness, and strength in competition and
+        research-grade aircraft from concept through physical build.
+      </div>
     </div>
   </div>
 </section>
 
-<!-- PROJECTS -->
-<section id="projects">
-  <p class="section-label">What I've Built</p>
+<!-- ══ PROJECTS ══ -->
+<section class="section" id="projects">
+  <p class="section-eyebrow">Selected Work</p>
   <h2 class="section-title">Projects</h2>
-  <div class="section-line"></div>
-  <div class="projects-grid">
+  <div class="section-rule"></div>
 
-    <div class="project-card">
-      <div class="project-header">
-        <div class="project-title">Thermomechanical Analysis of MMC Panels — Undergraduate Thesis</div>
-        <span class="project-badge">Research</span>
-      </div>
-      <p class="project-desc">
-        Developed a finite difference computational framework to investigate thermal stress distributions
-        in Metal Matrix Composite (MMC) panels under combined thermal and mechanical loading.
-        Evaluated stress concentrations and failure-prone zones in anisotropic composite structures
-        — directly relevant to aerospace structural safety and failure analysis.
-        Supervised by Dr. Shaikh Reaz Ahmed, Professor, Dept. of Mechanical Engineering, BUET.
-      </p>
-      <div class="project-tags">
-        <span class="ptag">MATLAB</span>
-        <span class="ptag">Finite Difference Method</span>
-        <span class="ptag">Composite Structures</span>
-        <span class="ptag">Thermal Stress Analysis</span>
-        <span class="ptag">ANSYS Verification</span>
-      </div>
+  <!-- Thesis -->
+  <div class="project-card">
+    <div class="project-meta">
+      <span class="status-badge complete">✓ Thesis Complete</span>
+      <span class="meta-sep">·</span>
+      <span class="meta-year">2025 – 2026</span>
     </div>
-
-    <div class="project-card">
-      <div class="project-header">
-        <div class="project-title">Project HeisenBird — AIAA DBF 2026 Competition Aircraft</div>
-        <span class="project-badge">Competition · Team Lead</span>
-      </div>
-      <p class="project-desc">
-        Led the MIST team through the full AIAA Design/Build/Fly lifecycle — aerodynamic design,
-        structural engineering, fabrication, and flight testing. Achieved
-        <strong>18th worldwide in Proposal Report</strong> and <strong>17th worldwide in Design Report</strong>
-        at Wichita, Kansas. Produced internationally peer-evaluated technical documentation and managed
-        cross-disciplinary team coordination across all competition phases.
-      </p>
-      <div class="project-tags">
-        <span class="ptag">Aerodynamic Design</span>
-        <span class="ptag">Structural Engineering</span>
-        <span class="ptag">XFLR5</span>
-        <span class="ptag">AVL</span>
-        <span class="ptag">SolidWorks</span>
-        <span class="ptag">Flight Testing</span>
-      </div>
-      <a class="project-link" href="https://www.linkedin.com/in/mahfuzur-rahman022/details/projects/" target="_blank">View on LinkedIn ↗</a>
+    <div class="project-title">Thermomechanical Behaviour of Anisotropic Metal Matrix Composite Panels</div>
+    <div class="project-role">Undergraduate Thesis · Supervisor: Dr. Shaikh Reaz Ahmed, BUET</div>
+    <div class="project-desc">
+      Developed a <strong>finite difference computational framework</strong> in MATLAB
+      to investigate thermal stress distributions in anisotropic Metal Matrix Composite (MMC)
+      panels under combined thermal and mechanical loading. The work characterises how
+      material anisotropy influences stress concentration and failure-prone zones — a
+      problem relevant to high-temperature structural components in aerospace design.
+      Results were validated against ANSYS thermal-structural simulations.
     </div>
-
-    <div class="project-card">
-      <div class="project-header">
-        <div class="project-title">AIAA DBF 2025 Competition Aircraft — Manufacturing Lead</div>
-        <span class="project-badge">Competition · Manufacturing Lead</span>
-      </div>
-      <p class="project-desc">
-        Led fabrication and structural assembly of the competition aircraft at Tucson, Arizona.
-        Ensured design-to-build accuracy and strict compliance with weight and safety requirements.
-        Managed pre-flight protocols and real-time mission safety assessment on competition day.
-        Result: <strong>1st in Asia — Total Flight Mission Score</strong> | 39th worldwide overall.
-      </p>
-      <div class="project-tags">
-        <span class="ptag">Composite Fabrication</span>
-        <span class="ptag">Structural Assembly</span>
-        <span class="ptag">Flight Operations</span>
-        <span class="ptag">Safety Management</span>
-      </div>
+    <div class="tag-row">
+      <span class="tag">MATLAB</span>
+      <span class="tag">Finite Difference Method</span>
+      <span class="tag">Metal Matrix Composites</span>
+      <span class="tag">Thermal Stress Analysis</span>
+      <span class="tag">ANSYS Validation</span>
+      <span class="tag">Anisotropic Materials</span>
     </div>
+  </div>
 
+  <!-- DBF 2026 -->
+  <div class="project-card">
+    <div class="project-meta">
+      <span class="status-badge competition">🏆 Competition · Team Lead</span>
+      <span class="meta-sep">·</span>
+      <span class="meta-year">2025 – 2026</span>
+    </div>
+    <div class="project-title">Project HeisenBird — AIAA Design/Build/Fly 2026</div>
+    <div class="project-role">Team Lead · Wichita, Kansas, USA · 18th Worldwide Proposal · 17th Worldwide Design Report</div>
+    <div class="project-desc">
+      Led the full engineering lifecycle of a competition UAV — from aerodynamic sizing and
+      structural design through composite fabrication and flight testing. Managed a
+      multidisciplinary team across all phases and authored the internationally
+      peer-evaluated <strong>Proposal Report and Design Report</strong>, both placing
+      in the top 20 worldwide. The project demanded integrating aerodynamic performance
+      targets with structural weight and stiffness constraints — a representative
+      aerospace design trade-off problem.
+    </div>
+    <div class="tag-row">
+      <span class="tag">XFLR5</span>
+      <span class="tag">AVL</span>
+      <span class="tag">SolidWorks</span>
+      <span class="tag">Composite Fabrication</span>
+      <span class="tag">Aerodynamic Design</span>
+      <span class="tag">Structural Sizing</span>
+      <span class="tag">Flight Testing</span>
+    </div>
+    <a class="proj-link" href="https://www.linkedin.com/in/mahfuzur-rahman022/details/projects/" target="_blank">View on LinkedIn →</a>
+  </div>
+
+  <!-- DBF 2025 -->
+  <div class="project-card">
+    <div class="project-meta">
+      <span class="status-badge competition">🥇 Competition · Manufacturing Lead</span>
+      <span class="meta-sep">·</span>
+      <span class="meta-year">2024 – 2025</span>
+    </div>
+    <div class="project-title">AIAA Design/Build/Fly 2025 Competition Aircraft</div>
+    <div class="project-role">Manufacturing Lead &amp; Flyoff Member · Tucson, Arizona, USA · 1st in Asia — Flight Mission · 39th Worldwide Overall</div>
+    <div class="project-desc">
+      Led fabrication and structural assembly of the competition aircraft,
+      ensuring dimensional accuracy and compliance with weight and structural
+      requirements throughout the build cycle. On competition day in Tucson,
+      served as Flyoff Member — managing pre-flight checks and real-time
+      mission assessment. The team's <strong>flight performance ranked 1st across
+      all Asian teams</strong>, a direct outcome of manufacturing quality and
+      pre-flight preparation.
+    </div>
+    <div class="tag-row">
+      <span class="tag">Composite Fabrication</span>
+      <span class="tag">Structural Assembly</span>
+      <span class="tag">Weight Compliance</span>
+      <span class="tag">Pre-flight Protocols</span>
+      <span class="tag">Flight Operations</span>
+    </div>
   </div>
 </section>
 
-<!-- EXPERIENCE -->
-<section id="experience">
-  <p class="section-label">Where I've Been</p>
+<!-- ══ SKILLS ══ -->
+<section class="section" id="skills">
+  <p class="section-eyebrow">Technical Profile</p>
+  <h2 class="section-title">Skills &amp; Tools</h2>
+  <div class="section-rule"></div>
+  <div class="skills-grid">
+    <div class="skill-block">
+      <h4>Simulation &amp; CAD</h4>
+      <div class="skill-chips">
+        <span class="chip">MATLAB</span>
+        <span class="chip">ANSYS</span>
+        <span class="chip">ABAQUS</span>
+        <span class="chip">SolidWorks</span>
+        <span class="chip">XFLR5</span>
+        <span class="chip">AVL</span>
+      </div>
+    </div>
+    <div class="skill-block">
+      <h4>Numerical Methods</h4>
+      <div class="skill-chips">
+        <span class="chip">Finite Element Method</span>
+        <span class="chip">Finite Difference Method</span>
+        <span class="chip">Numerical Analysis</span>
+        <span class="chip">Structural Solvers</span>
+      </div>
+    </div>
+    <div class="skill-block">
+      <h4>Mechanics</h4>
+      <div class="skill-chips">
+        <span class="chip">Composite Mechanics</span>
+        <span class="chip">Thermal Stress Analysis</span>
+        <span class="chip">Structural Analysis</span>
+        <span class="chip">Aerodynamics</span>
+        <span class="chip">Fatigue &amp; Failure</span>
+      </div>
+    </div>
+    <div class="skill-block">
+      <h4>Aviation &amp; MRO</h4>
+      <div class="skill-chips">
+        <span class="chip">CAMO / AMO</span>
+        <span class="chip">NDT</span>
+        <span class="chip">MEL / MCC</span>
+        <span class="chip">SMS / SRM</span>
+        <span class="chip">Airworthiness Directives</span>
+      </div>
+    </div>
+    <div class="skill-block">
+      <h4>Documentation</h4>
+      <div class="skill-chips">
+        <span class="chip">LaTeX</span>
+        <span class="chip">Technical Report Writing</span>
+        <span class="chip">Microsoft Office</span>
+      </div>
+    </div>
+    <div class="skill-block">
+      <h4>Certifications</h4>
+      <div class="skill-chips">
+        <span class="chip">MATLAB Onramp</span>
+        <span class="chip">Simulink Onramp</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ EXPERIENCE ══ -->
+<section class="section" id="experience">
+  <p class="section-eyebrow">Career</p>
   <h2 class="section-title">Experience</h2>
-  <div class="section-line"></div>
+  <div class="section-rule"></div>
   <div class="timeline">
 
     <div class="tl-item">
+      <div class="tl-dot"></div>
       <div class="tl-date">May 2025 – Jun 2025</div>
       <div class="tl-title">On-the-Job Training — Aeronautical Engineer Intern</div>
       <div class="tl-org">US-Bangla Airlines Ltd. · CAMO &amp; AMO Departments</div>
       <ul class="tl-body">
-        <li>Observed maintenance and airworthiness compliance on ATR 72-600 and Boeing 737-800 fleets.</li>
-        <li>Reviewed maintenance documentation, airworthiness directives, and technical compliance reports.</li>
-        <li>Received training on MEL, MCC, PPC, and Non-Destructive Testing (NDT).</li>
-        <li>Gained foundational awareness of Safety Management Systems (SMS) and Safety Risk Management (SRM).</li>
+        <li>Reviewed maintenance documentation, airworthiness directives, and technical compliance reports for ATR 72-600 and Boeing 737-800 fleets.</li>
+        <li>Received introductory training in MEL, MCC, PPC, and Non-Destructive Testing (NDT).</li>
+        <li>Gained practical exposure to Safety Management System (SMS) documentation and SRM processes in daily airline operations.</li>
       </ul>
     </div>
 
     <div class="tl-item">
+      <div class="tl-dot"></div>
       <div class="tl-date">Jun 2025 – Jun 2026</div>
       <div class="tl-title">Vice President — Administration</div>
       <div class="tl-org">MIST Aeronautics and Astronautics Club (MAAC)</div>
       <ul class="tl-body">
-        <li>Oversaw club administration, event management, and inter-departmental coordination.</li>
-        <li>Previously served as Executive – Administration (Sep 2024 – Jun 2025) and Event Manager (May 2023 – Sep 2024).</li>
+        <li>Oversees club administration, event management, and member coordination for MIST's primary aerospace student society.</li>
+        <li>Previously: Executive – Administration (Sep 2024 – Jun 2025) and Event Manager (May 2023 – Sep 2024).</li>
       </ul>
     </div>
 
     <div class="tl-item">
+      <div class="tl-dot"></div>
       <div class="tl-date">Jul 2025 – Jun 2026</div>
       <div class="tl-title">Department Representative — Aeronautical Engineering</div>
       <div class="tl-org">MIST · Directorate of Student Welfare</div>
       <ul class="tl-body">
-        <li>Elected student representative bridging AE students, the Head of Department, and university administration.</li>
-        <li>Advocated for academic needs and ensured timely institutional resolution of student concerns.</li>
+        <li>Elected student representative — formal bridge between AE students, the Head of Department, and university administration.</li>
       </ul>
     </div>
 
     <div class="tl-item">
-      <div class="tl-date">Jun 2024 – Jun 2025</div>
-      <div class="tl-title">Director of Event Management</div>
-      <div class="tl-org">MIST Drama and Film Society (MDFS)</div>
-      <ul class="tl-body">
-        <li>Planned and executed major campus cultural events; previously served as HR &amp; Treasurer (2023–2024).</li>
-      </ul>
-    </div>
-
-    <div class="tl-item">
+      <div class="tl-dot dim"></div>
       <div class="tl-date">2021 – 2025</div>
       <div class="tl-title">Private Tutor</div>
-      <div class="tl-org">Independent · SSC &amp; HSC Level</div>
+      <div class="tl-org">Independent · SSC &amp; HSC Level (4 Years)</div>
       <ul class="tl-body">
-        <li>Taught Mathematics, Physics, Chemistry, Biology, Higher Mathematics, and ICT to secondary students.</li>
-        <li>Maintained independent scheduling and quality across multiple concurrent students over 4 years.</li>
+        <li>Taught Mathematics, Physics, Chemistry, Higher Mathematics, Biology, and ICT to secondary-level students across concurrent engagements.</li>
       </ul>
     </div>
 
   </div>
 </section>
 
-<!-- ACHIEVEMENTS -->
-<section id="achievements">
-  <p class="section-label">Milestones</p>
-  <h2 class="section-title">Achievements</h2>
-  <div class="section-line"></div>
-  <div class="ach-grid">
-    <div class="ach-card">
-      <div class="ach-icon">🏆</div>
-      <div>
-        <div class="ach-title">AIAA DBF 2026 — 17th Worldwide (Design Report)</div>
-        <div class="ach-sub">Wichita, Kansas · Team Lead · 18th in Proposal Report</div>
+<!-- ══ HONOURS ══ -->
+<section class="section" id="honours">
+  <p class="section-eyebrow">Recognition</p>
+  <h2 class="section-title">Honours &amp; Awards</h2>
+  <div class="section-rule"></div>
+  <div class="honours-grid">
+
+    <div class="honour-card">
+      <div class="honour-icon">🌍</div>
+      <div class="honour-body">
+        <div class="honour-title">17th Worldwide — Design Report</div>
+        <div class="honour-org">AIAA Design/Build/Fly 2026 · Wichita, KS</div>
+        <div class="honour-desc">Also 18th worldwide in Proposal Report. Led as Team Lead.</div>
       </div>
     </div>
-    <div class="ach-card">
-      <div class="ach-icon">🥇</div>
-      <div>
-        <div class="ach-title">AIAA DBF 2025 — 1st in Asia (Flight Mission)</div>
-        <div class="ach-sub">Tucson, Arizona · Manufacturing Lead · 39th Worldwide Overall</div>
+
+    <div class="honour-card">
+      <div class="honour-icon">🥇</div>
+      <div class="honour-body">
+        <div class="honour-title">1st in Asia — Flight Mission Score</div>
+        <div class="honour-org">AIAA Design/Build/Fly 2025 · Tucson, AZ</div>
+        <div class="honour-desc">39th worldwide overall. Manufacturing Lead &amp; Flyoff Member.</div>
       </div>
     </div>
-    <div class="ach-card">
-      <div class="ach-icon">🎓</div>
-      <div>
-        <div class="ach-title">Dean's List of Honour — 2023 &amp; 2024</div>
-        <div class="ach-sub">MIST · CGPA 3.80 / 4.00</div>
+
+    <div class="honour-card">
+      <div class="honour-icon">🎓</div>
+      <div class="honour-body">
+        <div class="honour-title">Dean's List of Honour — 2023 &amp; 2024</div>
+        <div class="honour-org">Military Institute of Science and Technology</div>
+        <div class="honour-desc">CGPA 3.80 / 4.00 across seven semesters.</div>
       </div>
     </div>
-    <div class="ach-card">
-      <div class="ach-icon">📜</div>
-      <div>
-        <div class="ach-title">Board Scholarship (Talentpool) — SSC 2019</div>
-        <div class="ach-sub">Chittagong Board · GPA 5.00 / 5.00</div>
+
+    <div class="honour-card">
+      <div class="honour-icon">📜</div>
+      <div class="honour-body">
+        <div class="honour-title">Board Scholarship (Talentpool) — SSC 2019</div>
+        <div class="honour-org">Chittagong Board · GPA 5.00 / 5.00</div>
+        <div class="honour-desc">Chittagong Collegiate School.</div>
       </div>
     </div>
-    <div class="ach-card">
-      <div class="ach-icon">📜</div>
-      <div>
-        <div class="ach-title">Board Scholarship (General) — HSC 2021</div>
-        <div class="ach-sub">Chittagong Board · GPA 5.00 / 5.00</div>
+
+    <div class="honour-card">
+      <div class="honour-icon">📜</div>
+      <div class="honour-body">
+        <div class="honour-title">Board Scholarship (General) — HSC 2021</div>
+        <div class="honour-org">Chittagong Board · GPA 5.00 / 5.00</div>
+        <div class="honour-desc">Chittagong College.</div>
       </div>
     </div>
-    <div class="ach-card">
-      <div class="ach-icon">✈️</div>
-      <div>
-        <div class="ach-title">Industrial Training — US-Bangla Airlines</div>
-        <div class="ach-sub">ATR 72-600 &amp; Boeing 737-800 · CAMO &amp; AMO</div>
+
+    <div class="honour-card">
+      <div class="honour-icon">✈️</div>
+      <div class="honour-body">
+        <div class="honour-title">Industrial Training — US-Bangla Airlines</div>
+        <div class="honour-org">CAMO &amp; AMO · ATR 72-600 &amp; Boeing 737-800</div>
+        <div class="honour-desc">Hands-on MRO exposure as part of the B.Sc. programme.</div>
       </div>
     </div>
+
   </div>
 </section>
 
-<!-- CONTACT -->
-<section id="contact">
-  <p class="section-label">Let's Connect</p>
-  <h2 class="section-title">Contact</h2>
-  <div class="section-line"></div>
-  <div class="contact-card">
-    <h3 style="font-size:1.4rem; font-weight:700;">Working towards aerospace research &amp; education</h3>
-    <p>
-      If any of this resonates with you — whether it's composite structures, flight systems,
-      or just a shared passion for aerospace — I'd love to connect.
+<!-- ══ CONTACT ══ -->
+<section class="section" id="contact">
+  <div class="contact-wrap">
+    <div class="contact-available">
+      <span class="pulse" style="width:7px;height:7px;border-radius:50%;background:var(--green);animation:pulse 2s infinite;display:inline-block;"></span>
+      Available for Research Opportunities &amp; Graduate Applications
+    </div>
+    <h2 class="contact-title">Let's Connect</h2>
+    <p class="contact-sub">
+      Open to research collaborations, graduate programme discussions,
+      and conversations about aerospace structures and computational mechanics.
     </p>
-    <a class="btn btn-primary" href="mailto:mahfuzurrahmanmahir03@gmail.com">
+    <a class="contact-email" href="mailto:mahfuzurrahmanmahir03@gmail.com">
       ✉ mahfuzurrahmanmahir03@gmail.com
     </a>
-    <div class="contact-links">
-      <a class="contact-link" href="https://www.linkedin.com/in/mahfuzur-rahman022/" target="_blank">
-        <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24"><path d="M20.45 20.45h-3.56v-5.57c0-1.33-.03-3.04-1.85-3.04-1.85 0-2.13 1.44-2.13 2.94v5.67H9.35V9h3.41v1.56h.05c.48-.9 1.63-1.85 3.35-1.85 3.58 0 4.24 2.36 4.24 5.43v6.31zM5.34 7.43a2.07 2.07 0 1 1 0-4.14 2.07 2.07 0 0 1 0 4.14zM7.12 20.45H3.56V9h3.56v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.73v20.54C0 23.23.79 24 1.77 24h20.45C23.2 24 24 23.23 24 22.27V1.73C24 .77 23.2 0 22.22 0z"/></svg>
+    <div class="contact-links-row">
+      <a class="clink" href="https://www.linkedin.com/in/mahfuzur-rahman022/" target="_blank">
+        <svg width="14" height="14" fill="currentColor" viewBox="0 0 24 24"><path d="M20.45 20.45h-3.56v-5.57c0-1.33-.03-3.04-1.85-3.04-1.85 0-2.13 1.44-2.13 2.94v5.67H9.35V9h3.41v1.56h.05c.48-.9 1.63-1.85 3.35-1.85 3.58 0 4.24 2.36 4.24 5.43v6.31zM5.34 7.43a2.07 2.07 0 1 1 0-4.14 2.07 2.07 0 0 1 0 4.14zM7.12 20.45H3.56V9h3.56v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.73v20.54C0 23.23.79 24 1.77 24h20.45C23.2 24 24 23.23 24 22.27V1.73C24 .77 23.2 0 22.22 0z"/></svg>
         LinkedIn
       </a>
-      <a class="contact-link" href="https://github.com/mahfuzur-rahman22" target="_blank">
-        <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24"><path d="M12 .3a12 12 0 0 0-3.79 23.4c.6.1.82-.26.82-.58v-2.02c-3.34.72-4.04-1.61-4.04-1.61-.55-1.39-1.34-1.76-1.34-1.76-1.09-.74.08-.73.08-.73 1.2.08 1.84 1.24 1.84 1.24 1.07 1.83 2.8 1.3 3.49 1 .1-.78.42-1.31.76-1.61-2.67-.3-5.47-1.33-5.47-5.93 0-1.31.47-2.38 1.24-3.22-.14-.3-.54-1.52.1-3.18 0 0 1.01-.32 3.3 1.23a11.5 11.5 0 0 1 6 0c2.29-1.55 3.3-1.23 3.3-1.23.65 1.66.24 2.88.12 3.18.77.84 1.23 1.91 1.23 3.22 0 4.61-2.81 5.63-5.48 5.92.43.37.81 1.1.81 2.22v3.29c0 .32.22.69.83.57A12 12 0 0 0 12 .3z"/></svg>
+      <a class="clink" href="https://github.com/mahfuzur-rahman22" target="_blank">
+        <svg width="14" height="14" fill="currentColor" viewBox="0 0 24 24"><path d="M12 .3a12 12 0 0 0-3.79 23.4c.6.1.82-.26.82-.58v-2.02c-3.34.72-4.04-1.61-4.04-1.61-.55-1.39-1.34-1.76-1.34-1.76-1.09-.74.08-.73.08-.73 1.2.08 1.84 1.24 1.84 1.24 1.07 1.83 2.8 1.3 3.49 1 .1-.78.42-1.31.76-1.61-2.67-.3-5.47-1.33-5.47-5.93 0-1.31.47-2.38 1.24-3.22-.14-.3-.54-1.52.1-3.18 0 0 1.01-.32 3.3 1.23a11.5 11.5 0 0 1 6 0c2.29-1.55 3.3-1.23 3.3-1.23.65 1.66.24 2.88.12 3.18.77.84 1.23 1.91 1.23 3.22 0 4.61-2.81 5.63-5.48 5.92.43.37.81 1.1.81 2.22v3.29c0 .32.22.69.83.57A12 12 0 0 0 12 .3z"/></svg>
         GitHub
       </a>
-      <a class="contact-link" href="tel:+8801886756372">
-        📞 +880 1886-756372
+      <a class="clink">
+        📍 Dhaka, Bangladesh
       </a>
     </div>
   </div>
 </section>
 
 <footer>
-  <p>© 2026 Mahfuzur Rahman · Built with HTML &amp; CSS · Hosted on GitHub Pages</p>
+  <span>© 2026 Mahfuzur Rahman</span> · Graduate Aeronautical Engineer · MIST, Dhaka ·
+  <span>Built with HTML &amp; CSS · Hosted on GitHub Pages</span>
 </footer>
 
 </body>
