@@ -4,620 +4,483 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="description" content="Mahfuzur Rahman — Aeronautical Engineer specialising in computational structural mechanics, composite materials, and aerospace structures." />
-  <meta property="og:title" content="Mahfuzur Rahman — Aeronautical Engineer" />
-  <meta property="og:description" content="Aeronautical Engineer from MIST, Dhaka. Computational mechanics · Composite structures · Aerospace design." />
   <title>Mahfuzur Rahman — Aeronautical Engineer</title>
-
   <style>
     /* ─── TOKENS ─── */
     :root {
-      --bg:       #0a0d13;
-      --surface:  #0f1420;
-      --card:     #141b28;
-      --card2:    #1a2235;
-      --border:   #1e2d45;
-      --border2:  #243352;
-      --accent:   #4f9eff;
-      --accent2:  #7c6ef7;
-      --green:    #34d058;
-      --orange:   #f59e0b;
-      --text:     #dce8f5;
-      --muted:    #7a90aa;
-      --dim:      #3d5470;
-      --font:     'Segoe UI', system-ui, -apple-system, sans-serif;
+      --bg:      #080b11;
+      --surface: #0d1119;
+      --card:    #111827;
+      --card2:   #161f30;
+      --border:  #1c2d45;
+      --border2: #243355;
+      --accent:  #4f9eff;
+      --accent2: #7c6ef7;
+      --green:   #34d058;
+      --orange:  #f59e0b;
+      --red:     #f87171;
+      --text:    #dce8f5;
+      --muted:   #7a90aa;
+      --dim:     #3d5470;
+      --font:    'Segoe UI', system-ui, -apple-system, sans-serif;
     }
-
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     html { scroll-behavior: smooth; font-size: 16px; }
-    body { font-family: var(--font); background: var(--bg); color: var(--text); line-height: 1.75; overflow-x: hidden; }
-
+    body { font-family: var(--font); background: var(--bg); color: var(--text); line-height: 1.75; overflow-x: hidden; cursor: none; }
     a { color: inherit; text-decoration: none; }
     ul { list-style: none; }
     img { max-width: 100%; display: block; }
-
-    /* ─── SCROLLBAR ─── */
     ::-webkit-scrollbar { width: 5px; }
     ::-webkit-scrollbar-track { background: var(--bg); }
     ::-webkit-scrollbar-thumb { background: var(--border2); border-radius: 3px; }
 
-    /* ═══════════════════════════════════
-       NAV
-    ═══════════════════════════════════ */
+    /* ─── CANVAS STARFIELD ─── */
+    #starfield { position: fixed; inset: 0; z-index: 0; pointer-events: none; }
+
+    /* ─── CUSTOM CURSOR ─── */
+    #cur-dot { position: fixed; width: 8px; height: 8px; background: var(--accent); border-radius: 50%; pointer-events: none; z-index: 9999; transform: translate(-50%,-50%); transition: width .15s, height .15s, background .15s; }
+    #cur-ring { position: fixed; width: 32px; height: 32px; border: 1.5px solid rgba(79,158,255,.5); border-radius: 50%; pointer-events: none; z-index: 9998; transform: translate(-50%,-50%); transition: width .2s, height .2s, border-color .2s; }
+    body.cursor-hover #cur-dot { width: 12px; height: 12px; background: var(--accent2); }
+    body.cursor-hover #cur-ring { width: 44px; height: 44px; border-color: rgba(124,110,247,.6); }
+
+    /* ─── HAMBURGER ─── */
+    .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; padding: 4px; background: none; border: none; }
+    .hamburger span { display: block; width: 22px; height: 2px; background: var(--text); border-radius: 2px; transition: transform .3s, opacity .3s; }
+    .hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .hamburger.open span:nth-child(2) { transform: scaleX(0); opacity: 0; }
+    .hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+    /* ─── NAV ─── */
     #nav {
-      position: fixed; top: 0; left: 0; right: 0; z-index: 200;
-      height: 58px;
-      display: flex; align-items: center; justify-content: space-between;
-      padding: 0 2rem;
-      background: rgba(10,13,19,0.82);
-      backdrop-filter: blur(16px);
-      border-bottom: 1px solid rgba(30,45,69,0.6);
-      transition: background 0.3s;
+      position: fixed; top: 0; left: 0; right: 0; z-index: 500;
+      height: 58px; display: flex; align-items: center; justify-content: space-between;
+      padding: 0 2rem; background: transparent;
+      border-bottom: 1px solid transparent;
+      transition: background .3s, border-color .3s, backdrop-filter .3s;
     }
-    .nav-logo {
-      font-weight: 800; font-size: 1rem; letter-spacing: 0.3px;
-      color: var(--text);
-    }
+    #nav.scrolled { background: rgba(8,11,17,.88); border-color: rgba(28,45,69,.6); backdrop-filter: blur(18px); }
+    .nav-logo { font-weight: 800; font-size: 1rem; letter-spacing: .3px; color: var(--text); }
     .nav-logo span { color: var(--accent); }
-    .nav-links {
-      display: flex; gap: 1.8rem;
-    }
-    .nav-links a {
-      font-size: 0.82rem; font-weight: 500; color: var(--muted);
-      transition: color 0.2s; letter-spacing: 0.3px;
-    }
+    .nav-links { display: flex; gap: 1.8rem; }
+    .nav-links a { font-size: .82rem; font-weight: 500; color: var(--muted); transition: color .2s; letter-spacing: .3px; }
     .nav-links a:hover { color: var(--accent); }
     .nav-cta {
       display: inline-flex; align-items: center; gap: 6px;
       background: var(--accent); color: #050810;
       padding: 6px 16px; border-radius: 6px;
-      font-size: 0.8rem; font-weight: 700;
-      transition: opacity 0.2s;
+      font-size: .8rem; font-weight: 700; transition: opacity .2s;
     }
-    .nav-cta:hover { opacity: 0.88; }
+    .nav-cta:hover { opacity: .88; }
+    @media (max-width: 680px) {
+      .nav-links { display: none; flex-direction: column; gap: 1rem; position: absolute; top: 58px; left: 0; right: 0; background: var(--surface); border-bottom: 1px solid var(--border); padding: 1.2rem 2rem; }
+      .nav-links.open { display: flex; }
+      .hamburger { display: flex; }
+      .nav-cta { display: none; }
+    }
 
-    /* ═══════════════════════════════════
-       HERO
-    ═══════════════════════════════════ */
+    /* ─── FADE-UP REVEAL ─── */
+    .reveal { opacity: 0; transform: translateY(30px); transition: opacity .7s ease, transform .7s ease; }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+    @media (prefers-reduced-motion: reduce) { .reveal { opacity: 1; transform: none; transition: none; } }
+
+    /* ─── HERO ─── */
     #hero {
-      min-height: 100vh;
-      display: flex; flex-direction: column;
-      justify-content: center;
-      padding: 120px 2rem 80px;
-      max-width: 900px; margin: 0 auto;
-      position: relative;
+      min-height: 100vh; display: flex; flex-direction: column;
+      justify-content: center; padding: 120px 2rem 80px;
+      max-width: 960px; margin: 0 auto; position: relative; z-index: 1;
     }
 
-    /* subtle grid bg */
-    #hero::before {
-      content: '';
-      position: fixed; inset: 0; z-index: -1; pointer-events: none;
-      background-image:
-        linear-gradient(rgba(79,158,255,0.03) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(79,158,255,0.03) 1px, transparent 1px);
-      background-size: 60px 60px;
+    /* spinning ring around photo */
+    .photo-ring-wrap { position: relative; width: 160px; height: 160px; margin-bottom: 2rem; }
+    .photo-ring-wrap::before {
+      content: ''; position: absolute; inset: -5px; border-radius: 50%;
+      background: conic-gradient(var(--accent), var(--accent2), transparent, var(--accent));
+      animation: spin 4s linear infinite;
     }
-    /* radial glow */
-    #hero::after {
-      content: '';
-      position: fixed; inset: 0; z-index: -1; pointer-events: none;
-      background:
-        radial-gradient(ellipse 70% 55% at 55% 35%, rgba(79,158,255,0.07) 0%, transparent 65%),
-        radial-gradient(ellipse 40% 40% at 15% 75%, rgba(124,110,247,0.05) 0%, transparent 60%);
-    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    .photo-ring-wrap img { position: relative; width: 160px; height: 160px; border-radius: 50%; object-fit: cover; object-position: center top; border: 4px solid var(--bg); z-index: 1; }
+    @media (prefers-reduced-motion: reduce) { .photo-ring-wrap::before { animation: none; } }
+
+    .hero-top { display: flex; align-items: center; gap: 2.5rem; flex-wrap: wrap; margin-bottom: 1.6rem; }
+    .hero-top-text {}
 
     .hero-status {
       display: inline-flex; align-items: center; gap: 8px;
-      background: rgba(52,208,88,0.08); border: 1px solid rgba(52,208,88,0.22);
+      background: rgba(52,208,88,.08); border: 1px solid rgba(52,208,88,.22);
       border-radius: 100px; padding: 5px 14px;
-      font-size: 0.78rem; font-weight: 600; color: var(--green);
-      margin-bottom: 1.6rem; width: fit-content;
+      font-size: .78rem; font-weight: 600; color: var(--green);
+      margin-bottom: 1rem; width: fit-content;
     }
-    .hero-status .pulse {
-      width: 7px; height: 7px; border-radius: 50%; background: var(--green);
-      animation: pulse 2s infinite;
+    .pulse-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--green); animation: pulseDot 2s infinite; }
+    @keyframes pulseDot {
+      0%,100% { transform: scale(1); opacity: 1; box-shadow: 0 0 0 0 rgba(52,208,88,.6); }
+      50% { transform: scale(1.3); opacity: .6; box-shadow: 0 0 0 6px rgba(52,208,88,0); }
     }
-    @keyframes pulse {
-      0%, 100% { opacity: 1; transform: scale(1); }
-      50% { opacity: 0.5; transform: scale(0.8); }
-    }
+    @media (prefers-reduced-motion: reduce) { .pulse-dot { animation: none; } }
 
-    .hero-name {
-      font-size: clamp(2.4rem, 5.5vw, 4rem);
-      font-weight: 800; line-height: 1.1;
-      letter-spacing: -1px; margin-bottom: 0.3rem;
-    }
-    .hero-role {
-      font-size: clamp(1rem, 2.5vw, 1.4rem);
-      font-weight: 300; color: var(--muted);
-      letter-spacing: 0.5px; margin-bottom: 1.8rem;
-    }
+    .hero-name { font-size: clamp(2.2rem,5vw,3.5rem); font-weight: 800; line-height: 1.1; letter-spacing: -1px; margin-bottom: .3rem; }
+    .hero-role { font-size: clamp(.95rem,2vw,1.25rem); font-weight: 300; color: var(--muted); letter-spacing: .4px; margin-bottom: .5rem; }
     .hero-role strong { color: var(--accent); font-weight: 600; }
+    .hero-loc { font-size: .82rem; color: var(--dim); }
 
     .hero-statement {
-      font-size: clamp(0.95rem, 1.8vw, 1.08rem);
-      color: var(--muted); max-width: 640px; line-height: 1.9;
-      margin-bottom: 2.4rem;
-      border-left: 2px solid var(--border2);
-      padding-left: 1.2rem;
+      font-size: clamp(.9rem,1.6vw,1.02rem); color: var(--muted);
+      max-width: 680px; line-height: 1.9; margin-bottom: 2rem;
+      border-left: 2px solid var(--border2); padding-left: 1.2rem;
     }
     .hero-statement strong { color: var(--text); font-weight: 600; }
 
-    .hero-tags {
-      display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 2.4rem;
-    }
-    .hero-tag {
+    /* ─── STAT TABS ─── */
+    .stat-tabs { display: flex; flex-wrap: wrap; gap: .6rem; margin-bottom: 2rem; }
+    .stat-tab {
       background: var(--card); border: 1px solid var(--border);
-      border-radius: 5px; padding: 4px 11px;
-      font-size: 0.8rem; color: var(--muted); font-weight: 500;
+      border-radius: 10px; padding: .75rem 1.1rem;
+      display: flex; flex-direction: column; align-items: center;
+      min-width: 90px; transition: border-color .2s, transform .25s;
+      cursor: default;
     }
-    .hero-tag.hi { border-color: rgba(79,158,255,0.3); color: var(--accent); background: rgba(79,158,255,0.06); }
+    .stat-tab:hover { border-color: var(--border2); transform: translateY(-3px); }
+    .stat-num { font-size: 1.45rem; font-weight: 800; color: var(--accent); line-height: 1; }
+    .stat-label { font-size: .68rem; color: var(--muted); text-align: center; margin-top: 4px; text-transform: uppercase; letter-spacing: .8px; }
 
-    .hero-actions { display: flex; flex-wrap: wrap; gap: 0.8rem; margin-bottom: 3rem; }
-    .btn {
-      display: inline-flex; align-items: center; gap: 7px;
-      padding: 10px 20px; border-radius: 7px;
-      font-size: 0.87rem; font-weight: 600;
-      transition: all 0.18s;
-    }
+    .hero-tags { display: flex; flex-wrap: wrap; gap: .45rem; margin-bottom: 2rem; }
+    .hero-tag { background: var(--card); border: 1px solid var(--border); border-radius: 5px; padding: 4px 11px; font-size: .79rem; color: var(--muted); font-weight: 500; }
+    .hero-tag.hi { border-color: rgba(79,158,255,.3); color: var(--accent); background: rgba(79,158,255,.06); }
+
+    .hero-actions { display: flex; flex-wrap: wrap; gap: .75rem; margin-bottom: 2.5rem; }
+    .btn { display: inline-flex; align-items: center; gap: 7px; padding: 10px 20px; border-radius: 7px; font-size: .87rem; font-weight: 600; transition: all .18s; }
     .btn-primary { background: var(--accent); color: #050810; }
     .btn-primary:hover { filter: brightness(1.1); transform: translateY(-1px); }
-    .btn-ghost {
-      background: transparent; color: var(--text);
-      border: 1px solid var(--border2);
-    }
+    .btn-ghost { background: transparent; color: var(--text); border: 1px solid var(--border2); }
     .btn-ghost:hover { border-color: var(--accent); color: var(--accent); transform: translateY(-1px); }
 
-    .hero-affils {
-      display: flex; align-items: center; gap: 1.2rem; flex-wrap: wrap;
-      padding-top: 2rem; border-top: 1px solid var(--border);
-    }
-    .hero-affils-label { font-size: 0.72rem; text-transform: uppercase; letter-spacing: 1.5px; color: var(--dim); font-weight: 600; }
-    .affil-pill {
-      background: var(--card); border: 1px solid var(--border);
-      border-radius: 5px; padding: 4px 12px;
-      font-size: 0.78rem; color: var(--muted);
-    }
+    .hero-affils { display: flex; align-items: center; gap: 1rem; flex-wrap: wrap; padding-top: 1.8rem; border-top: 1px solid var(--border); }
+    .hero-affils-label { font-size: .72rem; text-transform: uppercase; letter-spacing: 1.5px; color: var(--dim); font-weight: 600; }
+    .affil-pill { background: var(--card); border: 1px solid var(--border); border-radius: 5px; padding: 4px 12px; font-size: .78rem; color: var(--muted); }
 
-    /* ═══════════════════════════════════
-       SECTION WRAPPER
-    ═══════════════════════════════════ */
-    .section {
-      max-width: 900px; margin: 0 auto;
-      padding: 4.5rem 2rem;
-      border-top: 1px solid rgba(30,45,69,0.4);
-    }
-    .section-eyebrow {
-      font-size: 0.72rem; text-transform: uppercase;
-      letter-spacing: 2px; color: var(--accent);
-      font-weight: 700; margin-bottom: 0.5rem;
-    }
-    .section-title {
-      font-size: clamp(1.5rem, 3vw, 2rem);
-      font-weight: 800; letter-spacing: -0.5px; margin-bottom: 0.6rem;
-    }
-    .section-rule {
-      width: 40px; height: 2.5px;
-      background: linear-gradient(90deg, var(--accent), var(--accent2));
-      border-radius: 2px; margin-bottom: 2.5rem;
-    }
-    .section-sub { font-size: 0.92rem; color: var(--muted); max-width: 560px; margin-bottom: 2.5rem; line-height: 1.8; }
+    /* floating scroll arrow */
+    .scroll-arrow { display: flex; flex-direction: column; align-items: center; gap: 4px; position: absolute; bottom: 2.2rem; left: 50%; transform: translateX(-50%); animation: floatArrow 2s ease-in-out infinite; opacity: .5; }
+    .scroll-arrow span { font-size: .7rem; letter-spacing: 1.5px; text-transform: uppercase; color: var(--muted); }
+    .scroll-arrow svg { color: var(--muted); }
+    @keyframes floatArrow { 0%,100% { transform: translateX(-50%) translateY(0); } 50% { transform: translateX(-50%) translateY(6px); } }
+    @media (prefers-reduced-motion: reduce) { .scroll-arrow { animation: none; } }
 
-    /* ═══════════════════════════════════
-       ABOUT
-    ═══════════════════════════════════ */
-    .about-grid {
-      display: grid;
-      grid-template-columns: 1fr 300px;
-      gap: 3rem; align-items: start;
-    }
+    /* ─── SECTION ─── */
+    .section { max-width: 960px; margin: 0 auto; padding: 4.5rem 2rem; border-top: 1px solid rgba(28,45,69,.4); position: relative; z-index: 1; }
+    .section-eyebrow { font-size: .72rem; text-transform: uppercase; letter-spacing: 2px; color: var(--accent); font-weight: 700; margin-bottom: .4rem; }
+    .section-title { font-size: clamp(1.4rem,3vw,1.9rem); font-weight: 800; letter-spacing: -.5px; margin-bottom: .5rem; }
+    .section-rule { width: 40px; height: 2.5px; background: linear-gradient(90deg,var(--accent),var(--accent2)); border-radius: 2px; margin-bottom: 2rem; }
+    .section-sub { font-size: .92rem; color: var(--muted); max-width: 560px; margin-bottom: 2rem; line-height: 1.85; }
+    @media (max-width: 640px) { .section { padding: 3rem 1.2rem; } }
+
+    /* ─── ABOUT ─── */
+    .about-grid { display: grid; grid-template-columns: 1fr 280px; gap: 3rem; align-items: start; }
     @media (max-width: 700px) { .about-grid { grid-template-columns: 1fr; } }
-
-    .about-body { font-size: 0.93rem; color: var(--muted); line-height: 1.9; }
+    .about-body { font-size: .93rem; color: var(--muted); line-height: 1.9; }
     .about-body p + p { margin-top: 1rem; }
     .about-body strong { color: var(--text); font-weight: 600; }
-    .about-body a { color: var(--accent); }
-    .about-body a:hover { text-decoration: underline; }
-
-    .about-links { display: flex; flex-direction: column; gap: 0.5rem; margin-top: 1.6rem; }
-    .about-link {
-      display: inline-flex; align-items: center; gap: 9px;
-      font-size: 0.85rem; color: var(--muted);
-      transition: color 0.2s;
-    }
+    .about-links { display: flex; flex-direction: column; gap: .5rem; margin-top: 1.5rem; }
+    .about-link { display: inline-flex; align-items: center; gap: 9px; font-size: .85rem; color: var(--muted); transition: color .2s; }
     .about-link:hover { color: var(--accent); }
-    .about-link .icon { width: 15px; text-align: center; font-size: 0.82rem; }
-
-    .about-card {
-      background: var(--card); border: 1px solid var(--border);
-      border-radius: 12px; overflow: hidden;
-    }
-    .about-photo {
-      width: 100%; aspect-ratio: 3/4; object-fit: cover;
-      background: var(--card2);
-      display: flex; align-items: center; justify-content: center;
-      color: var(--dim); font-size: 0.8rem;
-      min-height: 200px;
-    }
-    .photo-placeholder {
-      width: 100%; aspect-ratio: 3/3;
-      background: linear-gradient(135deg, var(--card2) 0%, #1a2740 100%);
-      display: flex; flex-direction: column;
-      align-items: center; justify-content: center;
-      gap: 0.5rem; color: var(--dim);
-    }
-    .photo-placeholder .avatar { font-size: 4rem; opacity: 0.4; }
-    .photo-placeholder small { font-size: 0.72rem; opacity: 0.5; }
-    .about-card-body { padding: 1.1rem; }
-    .about-card-name { font-weight: 700; font-size: 0.95rem; }
-    .about-card-role { font-size: 0.8rem; color: var(--muted); margin-bottom: 0.8rem; }
-    .about-card-item {
-      font-size: 0.78rem; color: var(--muted); padding: 4px 0;
-      border-bottom: 1px solid rgba(30,45,69,0.5);
-      display: flex; justify-content: space-between;
-    }
+    .about-card { background: var(--card); border: 1px solid var(--border); border-radius: 12px; overflow: hidden; }
+    .about-card img { width: 100%; aspect-ratio: 1/1; object-fit: cover; object-position: center top; display: block; }
+    .about-card-body { padding: 1rem; }
+    .about-card-name { font-weight: 700; font-size: .95rem; }
+    .about-card-role { font-size: .8rem; color: var(--muted); margin-bottom: .8rem; }
+    .about-card-item { font-size: .78rem; color: var(--muted); padding: 4px 0; border-bottom: 1px solid rgba(28,45,69,.5); display: flex; justify-content: space-between; }
     .about-card-item:last-child { border-bottom: none; }
     .about-card-item span:last-child { color: var(--text); font-weight: 500; text-align: right; }
 
-    /* ═══════════════════════════════════
-       RESEARCH INTERESTS
-    ═══════════════════════════════════ */
-    .interests-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-      gap: 1rem;
-    }
-    .interest-card {
-      background: var(--card); border: 1px solid var(--border);
-      border-radius: 10px; padding: 1.4rem;
-      transition: border-color 0.2s, transform 0.2s;
-    }
-    .interest-card:hover { border-color: var(--border2); transform: translateY(-2px); }
-    .interest-icon { font-size: 1.6rem; margin-bottom: 0.7rem; }
-    .interest-title { font-size: 0.95rem; font-weight: 700; margin-bottom: 0.4rem; }
-    .interest-desc { font-size: 0.83rem; color: var(--muted); line-height: 1.7; }
+    /* ─── INTERESTS ─── */
+    .interests-grid { display: grid; grid-template-columns: repeat(auto-fill,minmax(240px,1fr)); gap: 1rem; }
+    .interest-card { background: var(--card); border: 1px solid var(--border); border-radius: 10px; padding: 1.4rem; transition: border-color .2s, transform .25s; }
+    .interest-card:hover { border-color: var(--border2); transform: translateY(-3px); }
+    .interest-icon { font-size: 1.5rem; margin-bottom: .6rem; }
+    .interest-title { font-size: .93rem; font-weight: 700; margin-bottom: .35rem; }
+    .interest-desc { font-size: .82rem; color: var(--muted); line-height: 1.7; }
 
-    /* ═══════════════════════════════════
-       PROJECTS
-    ═══════════════════════════════════ */
-    .project-card {
-      background: var(--card); border: 1px solid var(--border);
-      border-radius: 12px; padding: 1.8rem; margin-bottom: 1.2rem;
-      transition: border-color 0.2s;
-      position: relative; overflow: hidden;
-    }
-    .project-card::before {
-      content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
-      background: linear-gradient(90deg, var(--accent), var(--accent2));
-      opacity: 0; transition: opacity 0.2s;
-    }
-    .project-card:hover { border-color: var(--border2); }
-    .project-card:hover::before { opacity: 1; }
+    /* ─── PROJECT CARDS ─── */
+    .project-card { background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 1.8rem; margin-bottom: 1.2rem; position: relative; overflow: hidden; transition: border-color .2s, transform .25s; }
+    .project-card:hover { border-color: var(--border2); transform: translateY(-3px); }
+    .project-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2.5px; background: linear-gradient(90deg,var(--accent),var(--accent2)); transform: scaleX(0); transform-origin: left; transition: transform .35s; }
+    .project-card:hover::before { transform: scaleX(1); }
+    .project-card.thesis-card { border-color: var(--border2); background: linear-gradient(160deg,var(--card) 0%,#131c2e 100%); }
+    .project-card.thesis-card::before { transform: scaleX(0.5); opacity: .6; }
+    .project-card.thesis-card:hover::before { transform: scaleX(1); opacity: 1; }
 
-    .project-meta {
-      display: flex; align-items: center; gap: 0.6rem;
-      flex-wrap: wrap; margin-bottom: 0.7rem;
-    }
-    .status-badge {
-      display: inline-flex; align-items: center; gap: 5px;
-      border-radius: 100px; padding: 2px 10px;
-      font-size: 0.73rem; font-weight: 700; letter-spacing: 0.3px;
-    }
-    .status-badge.active { background: rgba(52,208,88,0.1); border: 1px solid rgba(52,208,88,0.25); color: var(--green); }
-    .status-badge.complete { background: rgba(79,158,255,0.1); border: 1px solid rgba(79,158,255,0.25); color: var(--accent); }
-    .status-badge.competition { background: rgba(245,158,11,0.1); border: 1px solid rgba(245,158,11,0.25); color: var(--orange); }
+    .project-meta { display: flex; align-items: center; gap: .6rem; flex-wrap: wrap; margin-bottom: .7rem; }
+    .status-badge { display: inline-flex; align-items: center; gap: 5px; border-radius: 100px; padding: 2px 10px; font-size: .73rem; font-weight: 700; letter-spacing: .3px; }
+    .status-badge.active { background: rgba(52,208,88,.1); border: 1px solid rgba(52,208,88,.25); color: var(--green); }
+    .status-badge.complete { background: rgba(79,158,255,.1); border: 1px solid rgba(79,158,255,.25); color: var(--accent); }
+    .status-badge.competition { background: rgba(245,158,11,.1); border: 1px solid rgba(245,158,11,.25); color: var(--orange); }
     .meta-sep { color: var(--dim); }
-    .meta-year { font-size: 0.78rem; color: var(--dim); font-weight: 500; }
-
-    .project-title { font-size: 1.05rem; font-weight: 700; margin-bottom: 0.5rem; }
-    .project-role { font-size: 0.82rem; color: var(--accent); font-weight: 600; margin-bottom: 0.8rem; }
-    .project-desc { font-size: 0.9rem; color: var(--muted); line-height: 1.85; margin-bottom: 1.1rem; }
+    .meta-year { font-size: .78rem; color: var(--dim); font-weight: 500; }
+    .project-title { font-size: 1.05rem; font-weight: 700; margin-bottom: .4rem; }
+    .project-role { font-size: .82rem; color: var(--accent); font-weight: 600; margin-bottom: .75rem; }
+    .project-desc { font-size: .9rem; color: var(--muted); line-height: 1.85; margin-bottom: 1rem; }
     .project-desc strong { color: var(--text); font-weight: 600; }
+    .tag-row { display: flex; flex-wrap: wrap; gap: .4rem; }
+    .tag { background: var(--card2); border: 1px solid var(--border); border-radius: 4px; padding: 2px 9px; font-size: .76rem; color: var(--muted); }
+    .proj-link { display: inline-flex; align-items: center; gap: 5px; color: var(--accent); font-size: .82rem; font-weight: 600; margin-top: 1rem; transition: gap .15s; }
+    .proj-link:hover { gap: 9px; }
 
-    .tag-row { display: flex; flex-wrap: wrap; gap: 0.4rem; }
-    .tag {
-      background: var(--card2); border: 1px solid var(--border);
-      border-radius: 4px; padding: 2px 9px;
-      font-size: 0.76rem; color: var(--muted);
-    }
-    .proj-link {
-      display: inline-flex; align-items: center; gap: 5px;
-      color: var(--accent); font-size: 0.82rem; font-weight: 600;
-      margin-top: 1rem; transition: gap 0.15s;
-    }
-    .proj-link:hover { gap: 8px; }
-
-    /* ── THESIS CARD EXTRAS ── */
-    /* Make the thesis card visually heavier */
-    .project-card.thesis-card {
-      border-color: var(--border2);
-      background: linear-gradient(160deg, var(--card) 0%, #151f35 100%);
-    }
-    .project-card.thesis-card::before { opacity: 0.6; }
-
-    .thesis-blocks { display: flex; flex-direction: column; gap: 0.75rem; margin: 1rem 0; }
-    .thesis-block {
-      display: flex; gap: 0.9rem; align-items: flex-start;
-      background: var(--card2); border: 1px solid var(--border);
-      border-radius: 7px; padding: 0.7rem 1rem;
-    }
-    .tblock-label {
-      font-size: 0.68rem; font-weight: 800; text-transform: uppercase;
-      letter-spacing: 1.2px; color: var(--accent);
-      min-width: 56px; padding-top: 2px; flex-shrink: 0;
-    }
-    .tblock-text { font-size: 0.88rem; color: var(--muted); line-height: 1.75; }
+    .thesis-blocks { display: flex; flex-direction: column; gap: .7rem; margin: 1rem 0; }
+    .thesis-block { display: flex; gap: .9rem; align-items: flex-start; background: var(--card2); border: 1px solid var(--border); border-radius: 7px; padding: .7rem 1rem; }
+    .tblock-label { font-size: .68rem; font-weight: 800; text-transform: uppercase; letter-spacing: 1.2px; color: var(--accent); min-width: 56px; padding-top: 2px; flex-shrink: 0; }
+    .tblock-text { font-size: .87rem; color: var(--muted); line-height: 1.75; }
     .tblock-text strong { color: var(--text); }
-
-    .thesis-figs {
-      display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;
-      margin-top: 1.3rem;
-    }
+    .thesis-figs { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-top: 1.2rem; }
     @media (max-width: 600px) { .thesis-figs { grid-template-columns: 1fr; } }
-    .thesis-fig {
-      background: var(--card2); border: 1px solid var(--border);
-      border-radius: 8px; overflow: hidden;
-    }
-    .thesis-fig img {
-      width: 100%; display: block;
-      background: #fff; /* figures are on white */
-    }
-    .thesis-fig figcaption {
-      font-size: 0.72rem; color: var(--dim); padding: 0.5rem 0.75rem;
-      line-height: 1.5; border-top: 1px solid var(--border);
-    }
+    .thesis-fig { background: var(--card2); border: 1px solid var(--border); border-radius: 8px; overflow: hidden; cursor: zoom-in; }
+    .thesis-fig img { width: 100%; display: block; background: #fff; transition: transform .3s; }
+    .thesis-fig:hover img { transform: scale(1.02); }
+    .thesis-fig figcaption { font-size: .72rem; color: var(--dim); padding: .5rem .75rem; line-height: 1.5; border-top: 1px solid var(--border); }
 
-    /* ═══════════════════════════════════
-       SKILLS
-    ═══════════════════════════════════ */
-    .skills-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
-      gap: 1rem;
-    }
-    .skill-block {
-      background: var(--card); border: 1px solid var(--border);
-      border-radius: 10px; padding: 1.2rem;
-    }
-    .skill-block h4 {
-      font-size: 0.72rem; text-transform: uppercase; letter-spacing: 1.2px;
-      color: var(--accent); font-weight: 700; margin-bottom: 0.8rem;
-    }
+    /* ─── SKILLS ─── */
+    .skills-grid { display: grid; grid-template-columns: repeat(auto-fill,minmax(200px,1fr)); gap: 1rem; }
+    .skill-block { background: var(--card); border: 1px solid var(--border); border-radius: 10px; padding: 1.2rem; transition: border-color .2s, transform .25s; }
+    .skill-block:hover { border-color: var(--border2); transform: translateY(-3px); }
+    .skill-block h4 { font-size: .72rem; text-transform: uppercase; letter-spacing: 1.2px; color: var(--accent); font-weight: 700; margin-bottom: .75rem; }
     .skill-chips { display: flex; flex-wrap: wrap; gap: 5px; }
-    .chip {
-      background: var(--card2); border: 1px solid var(--border);
-      border-radius: 4px; padding: 3px 9px;
-      font-size: 0.79rem; color: var(--text);
-    }
+    .chip { background: var(--card2); border: 1px solid var(--border); border-radius: 4px; padding: 3px 9px; font-size: .79rem; color: var(--text); }
 
-    /* ═══════════════════════════════════
-       EXPERIENCE TIMELINE
-    ═══════════════════════════════════ */
+    /* ─── CERTIFICATIONS ─── */
+    .certs-grid { display: grid; grid-template-columns: repeat(auto-fill,minmax(260px,1fr)); gap: 1rem; }
+    .cert-card { background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 1.4rem; display: flex; flex-direction: column; gap: .8rem; transition: border-color .2s, transform .25s; position: relative; overflow: hidden; }
+    .cert-card:hover { border-color: var(--border2); transform: translateY(-3px); }
+    .cert-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2.5px; background: linear-gradient(90deg,var(--accent),var(--accent2)); transform: scaleX(0); transform-origin: left; transition: transform .35s; }
+    .cert-card:hover::before { transform: scaleX(1); }
+    .cert-icon { width: 40px; height: 40px; border-radius: 10px; background: var(--card2); border: 1px solid var(--border); display: flex; align-items: center; justify-content: center; font-size: 1.3rem; }
+    .cert-title { font-size: .95rem; font-weight: 700; }
+    .cert-org { font-size: .8rem; color: var(--accent); font-weight: 600; }
+    .cert-desc { font-size: .82rem; color: var(--muted); line-height: 1.65; flex: 1; }
+    .cert-actions { display: flex; gap: .5rem; flex-wrap: wrap; }
+    .cert-btn {
+      display: inline-flex; align-items: center; gap: 5px;
+      padding: 6px 14px; border-radius: 6px; font-size: .78rem; font-weight: 600;
+      border: 1px solid var(--border2); color: var(--muted);
+      transition: all .18s; background: transparent;
+      cursor: pointer;
+    }
+    .cert-btn:hover { border-color: var(--accent); color: var(--accent); }
+    .cert-btn.primary { background: rgba(79,158,255,.1); border-color: rgba(79,158,255,.35); color: var(--accent); }
+    .cert-btn.primary:hover { background: rgba(79,158,255,.2); }
+
+    /* ─── TIMELINE ─── */
     .timeline { position: relative; padding-left: 1.4rem; }
-    .timeline::before {
-      content: ''; position: absolute;
-      left: 0; top: 8px; bottom: 0;
-      width: 1px; background: var(--border);
-    }
+    .timeline::before { content: ''; position: absolute; left: 0; top: 8px; bottom: 0; width: 1px; background: var(--border); }
     .tl-item { position: relative; padding-left: 1.8rem; margin-bottom: 2.4rem; }
-    .tl-dot {
-      position: absolute; left: -1.4rem; top: 6px;
-      width: 10px; height: 10px; border-radius: 50%;
-      background: var(--accent); border: 2px solid var(--bg);
-      box-shadow: 0 0 0 2px var(--accent);
-    }
+    .tl-dot { position: absolute; left: -1.4rem; top: 6px; width: 10px; height: 10px; border-radius: 50%; background: var(--accent); border: 2px solid var(--bg); box-shadow: 0 0 0 2px var(--accent); }
     .tl-dot.dim { background: var(--dim); box-shadow: 0 0 0 2px var(--dim); }
-    .tl-date {
-      font-size: 0.75rem; font-weight: 600; color: var(--accent);
-      text-transform: uppercase; letter-spacing: 0.8px; margin-bottom: 0.2rem;
-    }
+    .tl-date { font-size: .75rem; font-weight: 600; color: var(--accent); text-transform: uppercase; letter-spacing: .8px; margin-bottom: .2rem; }
     .tl-title { font-size: 1rem; font-weight: 700; }
-    .tl-org { font-size: 0.85rem; color: var(--muted); margin-bottom: 0.7rem; }
-    .tl-body { font-size: 0.88rem; color: var(--muted); }
-    .tl-body li {
-      position: relative; padding-left: 1rem; margin-top: 0.3rem;
-    }
+    .tl-org { font-size: .85rem; color: var(--muted); margin-bottom: .7rem; }
+    .tl-body { font-size: .88rem; color: var(--muted); }
+    .tl-body li { position: relative; padding-left: 1rem; margin-top: .3rem; }
     .tl-body li::before { content: '·'; position: absolute; left: 0; color: var(--accent); font-weight: 700; }
 
-    /* ═══════════════════════════════════
-       HONOURS
-    ═══════════════════════════════════ */
-    .honours-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(270px, 1fr));
-      gap: 1rem;
-    }
-    .honour-card {
-      background: var(--card); border: 1px solid var(--border);
-      border-radius: 10px; padding: 1.3rem;
-      display: flex; gap: 1rem; align-items: flex-start;
-      transition: border-color 0.2s;
-    }
-    .honour-card:hover { border-color: var(--border2); }
-    .honour-icon {
-      width: 36px; height: 36px; border-radius: 8px;
-      background: var(--card2); border: 1px solid var(--border);
-      display: flex; align-items: center; justify-content: center;
-      font-size: 1.1rem; flex-shrink: 0;
-    }
-    .honour-body {}
-    .honour-title { font-size: 0.9rem; font-weight: 700; margin-bottom: 0.2rem; }
-    .honour-org { font-size: 0.78rem; color: var(--accent); font-weight: 600; margin-bottom: 0.3rem; }
-    .honour-desc { font-size: 0.8rem; color: var(--muted); line-height: 1.6; }
+    /* ─── HONOURS ─── */
+    .honours-grid { display: grid; grid-template-columns: repeat(auto-fill,minmax(260px,1fr)); gap: 1rem; }
+    .honour-card { background: var(--card); border: 1px solid var(--border); border-radius: 10px; padding: 1.3rem; display: flex; gap: 1rem; align-items: flex-start; transition: border-color .2s, transform .25s; }
+    .honour-card:hover { border-color: var(--border2); transform: translateY(-3px); }
+    .honour-icon { width: 36px; height: 36px; border-radius: 8px; background: var(--card2); border: 1px solid var(--border); display: flex; align-items: center; justify-content: center; font-size: 1.1rem; flex-shrink: 0; }
+    .honour-title { font-size: .9rem; font-weight: 700; margin-bottom: .2rem; }
+    .honour-org { font-size: .78rem; color: var(--accent); font-weight: 600; margin-bottom: .3rem; }
+    .honour-desc { font-size: .8rem; color: var(--muted); line-height: 1.6; }
 
-    /* ═══════════════════════════════════
-       CONTACT
-    ═══════════════════════════════════ */
-    .contact-wrap {
-      background: var(--card); border: 1px solid var(--border);
-      border-radius: 14px; padding: 3rem 2rem; text-align: center;
-    }
-    .contact-available {
-      display: inline-flex; align-items: center; gap: 8px;
-      background: rgba(52,208,88,0.08); border: 1px solid rgba(52,208,88,0.22);
-      border-radius: 100px; padding: 5px 14px;
-      font-size: 0.78rem; font-weight: 600; color: var(--green);
-      margin-bottom: 1.4rem;
-    }
-    .contact-title { font-size: 1.5rem; font-weight: 800; margin-bottom: 0.7rem; }
-    .contact-sub { font-size: 0.92rem; color: var(--muted); max-width: 440px; margin: 0 auto 2rem; }
-    .contact-email {
-      display: inline-flex; align-items: center; gap: 8px;
-      background: var(--accent); color: #050810;
-      padding: 12px 24px; border-radius: 8px;
-      font-size: 0.9rem; font-weight: 700;
-      transition: filter 0.2s;
-    }
+    /* ─── CONTACT ─── */
+    .contact-wrap { background: var(--card); border: 1px solid var(--border); border-radius: 14px; padding: 3rem 2rem; text-align: center; }
+    .contact-available { display: inline-flex; align-items: center; gap: 8px; background: rgba(52,208,88,.08); border: 1px solid rgba(52,208,88,.22); border-radius: 100px; padding: 5px 14px; font-size: .78rem; font-weight: 600; color: var(--green); margin-bottom: 1.4rem; }
+    .contact-title { font-size: 1.5rem; font-weight: 800; margin-bottom: .7rem; }
+    .contact-sub { font-size: .92rem; color: var(--muted); max-width: 440px; margin: 0 auto 2rem; }
+    .contact-email { display: inline-flex; align-items: center; gap: 8px; background: var(--accent); color: #050810; padding: 12px 24px; border-radius: 8px; font-size: .9rem; font-weight: 700; transition: filter .2s; }
     .contact-email:hover { filter: brightness(1.1); }
-    .contact-links-row {
-      display: flex; justify-content: center; flex-wrap: wrap;
-      gap: 0.8rem; margin-top: 1.6rem;
-    }
-    .clink {
-      display: inline-flex; align-items: center; gap: 7px;
-      background: var(--surface); border: 1px solid var(--border);
-      border-radius: 7px; padding: 9px 18px;
-      font-size: 0.85rem; font-weight: 500; color: var(--muted);
-      transition: all 0.18s;
-    }
+    .contact-links-row { display: flex; justify-content: center; flex-wrap: wrap; gap: .8rem; margin-top: 1.6rem; }
+    .clink { display: inline-flex; align-items: center; gap: 7px; background: var(--surface); border: 1px solid var(--border); border-radius: 7px; padding: 9px 18px; font-size: .85rem; font-weight: 500; color: var(--muted); transition: all .18s; }
     .clink:hover { border-color: var(--accent); color: var(--accent); transform: translateY(-1px); }
 
-    /* ═══════════════════════════════════
-       FOOTER
-    ═══════════════════════════════════ */
-    footer {
-      text-align: center; padding: 2.5rem 2rem;
-      color: var(--dim); font-size: 0.8rem;
-      border-top: 1px solid rgba(30,45,69,0.4);
-    }
-    footer span { color: var(--muted); }
+    /* ─── LIGHTBOX ─── */
+    #lightbox { position: fixed; inset: 0; z-index: 9000; background: rgba(0,0,0,.88); display: none; align-items: center; justify-content: center; padding: 2rem; animation: lbFadeIn .18s ease; }
+    #lightbox.open { display: flex; }
+    @keyframes lbFadeIn { from { opacity: 0; } to { opacity: 1; } }
+    #lightbox img { max-width: 90vw; max-height: 85vh; border-radius: 8px; animation: lbZoomIn .2s ease; box-shadow: 0 20px 60px rgba(0,0,0,.6); }
+    @keyframes lbZoomIn { from { transform: scale(.94); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+    #lb-close { position: absolute; top: 1.2rem; right: 1.5rem; font-size: 1.8rem; color: var(--muted); cursor: pointer; background: none; border: none; transition: color .2s; line-height: 1; }
+    #lb-close:hover { color: var(--text); }
+    #lb-caption { position: absolute; bottom: 1.5rem; left: 50%; transform: translateX(-50%); background: rgba(0,0,0,.7); color: var(--muted); font-size: .78rem; padding: .4rem 1rem; border-radius: 100px; white-space: nowrap; }
 
-    /* ═══════════════════════════════════
-       RESPONSIVE
-    ═══════════════════════════════════ */
-    @media (max-width: 640px) {
-      .nav-links { display: none; }
-      .hero-name { letter-spacing: -0.5px; }
-      .section { padding: 3rem 1.2rem; }
-    }
+    /* ─── FOOTER ─── */
+    footer { text-align: center; padding: 2.5rem 2rem; color: var(--dim); font-size: .8rem; border-top: 1px solid rgba(28,45,69,.4); position: relative; z-index: 1; }
+    footer span { color: var(--muted); }
   </style>
 </head>
 <body>
 
+<!-- STARFIELD -->
+<canvas id="starfield"></canvas>
+
+<!-- CUSTOM CURSOR -->
+<div id="cur-dot"></div>
+<div id="cur-ring"></div>
+
+<!-- LIGHTBOX -->
+<div id="lightbox" role="dialog" aria-modal="true">
+  <button id="lb-close" aria-label="Close">✕</button>
+  <img id="lb-img" src="" alt="" />
+  <div id="lb-caption"></div>
+</div>
+
 <!-- ══ NAV ══ -->
 <nav id="nav">
   <div class="nav-logo">Mahfuzur <span>Rahman</span></div>
-  <ul class="nav-links">
+  <ul class="nav-links" id="nav-links">
     <li><a href="#about">About</a></li>
     <li><a href="#interests">Research</a></li>
     <li><a href="#projects">Projects</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#certifications">Certificates</a></li>
     <li><a href="#experience">Experience</a></li>
     <li><a href="#honours">Honours</a></li>
     <li><a href="#contact">Contact</a></li>
   </ul>
-  <a class="nav-cta" href="#contact">Get in Touch</a>
+  <a class="nav-cta" href="assets/docs/CV_Mahfuzur_Rahman.pdf" target="_blank">View CV ↗</a>
+  <button class="hamburger" id="hamburger" aria-label="Toggle menu">
+    <span></span><span></span><span></span>
+  </button>
 </nav>
 
 <!-- ══ HERO ══ -->
 <section id="hero">
-  <div class="hero-status">
-    <span class="pulse"></span>
-    Available for Research &amp; Graduate Opportunities
+  <!-- Spinning photo ring -->
+  <div class="photo-ring-wrap reveal">
+    <img src="IMG_6833.PNG" alt="Mahfuzur Rahman" />
   </div>
 
-  <h1 class="hero-name">Mahfuzur Rahman</h1>
-  <p class="hero-role">Graduate Aeronautical Engineer</p>
+  <div class="hero-top reveal">
+    <div class="hero-top-text">
+      <div class="hero-status">
+        <span class="pulse-dot"></span>
+        Available for Research &amp; Graduate Opportunities
+      </div>
+      <h1 class="hero-name">Mahfuzur Rahman</h1>
+      <p class="hero-role">Graduate <strong>Aeronautical Engineer</strong></p>
+      <p class="hero-loc">📍 Dhaka, Bangladesh &nbsp;·&nbsp; MIST, B.Sc. Aeronautical Eng. &nbsp;·&nbsp; CGPA 3.80 / 4.00</p>
+    </div>
+  </div>
 
-  <p class="hero-statement">
-    I am interested in how structures behave when pushed to their limits — how
+  <p class="hero-statement reveal">
+    I'm drawn to how structures behave at their limits, how
     <strong>composite materials carry load and accumulate damage</strong>,
     how <strong>thermal gradients drive failure</strong> in aerospace components,
-    and how <strong>computational tools</strong> can be built to predict both.
-    My work sits at the intersection of materials science, structural mechanics,
-    and numerical methods — exactly where the hard aerospace problems live.
+    and how <strong>computational solvers</strong> can be built from first principles
+    to predict both. My work sits at the intersection of materials science,
+    structural mechanics, and numerical methods, exactly where the hard aerospace problems live.
   </p>
 
-  <div class="hero-tags">
+  <!-- Animated stat counters -->
+  <div class="stat-tabs reveal" id="stat-tabs">
+    <div class="stat-tab">
+      <span class="stat-num" data-target="3.80" data-decimals="2">0</span>
+      <span class="stat-label">CGPA</span>
+    </div>
+    <div class="stat-tab">
+      <span class="stat-num" data-target="2" data-suffix="">0</span>
+      <span class="stat-label">AIAA DBF<br>Competitions</span>
+    </div>
+    <div class="stat-tab">
+      <span class="stat-num" data-target="17" data-suffix="th">0</span>
+      <span class="stat-label">Worldwide<br>Design Report</span>
+    </div>
+    <div class="stat-tab">
+      <span class="stat-num" data-prefix="1st" data-static="true">1st</span>
+      <span class="stat-label">in Asia<br>Flight Mission</span>
+    </div>
+    <div class="stat-tab">
+      <span class="stat-num" data-target="5" data-suffix="+">0</span>
+      <span class="stat-label">Certifications</span>
+    </div>
+  </div>
+
+  <div class="hero-tags reveal">
     <span class="hero-tag hi">Composite Mechanics</span>
     <span class="hero-tag hi">Computational Structural Analysis</span>
     <span class="hero-tag hi">Aerospace Structures</span>
-    <span class="hero-tag">MATLAB · ANSYS · ABAQUS</span>
+    <span class="hero-tag">MATLAB · Python · ANSYS · ABAQUS</span>
     <span class="hero-tag">FEM · FDM · Numerical Methods</span>
     <span class="hero-tag">AIAA DBF · UAV Design</span>
   </div>
 
-  <div class="hero-actions">
+  <div class="hero-actions reveal">
     <a class="btn btn-primary" href="#interests">↓ Research Interests</a>
-    <a class="btn btn-ghost" href="assets/docs/Mahfuzur_Rahman_CV.pdf" target="_blank" download>⬇ Download CV (PDF)</a>
+    <a class="btn btn-ghost" href="assets/docs/CV_Mahfuzur_Rahman.pdf" target="_blank">📄 Preview CV</a>
     <a class="btn btn-ghost" href="https://www.linkedin.com/in/mahfuzur-rahman022/" target="_blank">LinkedIn ↗</a>
     <a class="btn btn-ghost" href="https://github.com/mahfuzur-rahman22" target="_blank">GitHub ↗</a>
   </div>
 
-  <div class="hero-affils">
+  <div class="hero-affils reveal">
     <span class="hero-affils-label">Affiliations</span>
     <span class="affil-pill">MIST · B.Sc. Aeronautical Eng.</span>
     <span class="affil-pill">AIAA Student Member</span>
     <span class="affil-pill">MAAC · VP Administration</span>
-    <span class="affil-pill">CGPA 3.80 · Dean's List ×2</span>
+    <span class="affil-pill">Dept. Representative · AE, MIST</span>
+    <span class="affil-pill">Dean's List ×2</span>
+  </div>
+
+  <div class="scroll-arrow">
+    <span>Scroll</span>
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12l7 7 7-7"/></svg>
   </div>
 </section>
 
 <!-- ══ ABOUT ══ -->
 <section class="section" id="about">
   <p class="section-eyebrow">Background</p>
-  <h2 class="section-title">About Me</h2>
-  <div class="section-rule"></div>
+  <h2 class="section-title reveal">About Me</h2>
+  <div class="section-rule reveal"></div>
 
   <div class="about-grid">
-    <div>
+    <div class="reveal">
       <div class="about-body">
         <p>
           I'm a graduate in <strong>Aeronautical Engineering</strong> from the
-          Military Institute of Science and Technology (MIST), Dhaka — CGPA
-          <strong>3.80/4.00</strong>, Dean's List 2023 &amp; 2024. My academic
-          work has consistently focused on the structural and mechanical behaviour
-          of aerospace materials, culminating in an undergraduate thesis on
-          thermo-mechanical analysis of composite panels.
+          Military Institute of Science and Technology (MIST), Dhaka with CGPA
+          <strong>3.80/4.00</strong>, MIST Dean's List 2023 &amp; 2024, and MIST
+          Merit Scholarship Spring 2025 (3rd in class). My academic work has focused
+          on the structural and mechanical behaviour of aerospace materials,
+          culminating in an undergraduate thesis on thermo-mechanical analysis
+          of anisotropic composite panels.
         </p>
         <p>
-          Outside coursework, I've applied that knowledge hands-on — leading
-          the MIST team at the <strong>AIAA Design/Build/Fly Competition</strong>
-          across two international cycles in Wichita and Tucson, managing the
-          full design–fabrication–flight pipeline from aerodynamics through
-          structural build. These experiences sharpened my ability to translate
-          analytical thinking into real hardware under constraints.
+          I've applied that knowledge hands-on, leading the MIST team at the
+          <strong>AIAA Design/Build/Fly Competition</strong> across two
+          international cycles in Wichita and Tucson, managing the full
+          design–fabrication–flight pipeline. In 2025 we ranked
+          <strong>1st in Asia for Total Flight Mission Score</strong>; in 2026
+          I led as Team Lead, achieving <strong>17th worldwide in Design Report</strong>.
         </p>
         <p>
-          I also completed industrial training at <strong>US-Bangla Airlines</strong>,
-          working within CAMO and AMO departments on ATR 72-600 and Boeing 737-800
-          fleets — giving me grounded exposure to how airworthiness and structural
-          integrity are managed in operational aviation.
+          I completed industrial training at <strong>US-Bangla Airlines Ltd.</strong>
+          within CAMO and AMO departments on ATR 72-600 and Boeing 737-800 fleets,
+          grounded exposure to airworthiness and structural integrity in operational aviation.
         </p>
         <p>
           I'm working towards a career in <strong>aerospace research and education</strong>,
           with particular interest in computational modelling of composite and
-          multi-material structures. If any of this resonates, I'd welcome
-          a conversation.
+          multi-material structures. If any of this resonates, I'd welcome a conversation.
         </p>
       </div>
       <div class="about-links">
-        <a class="about-link" href="mailto:mahfuzurrahmanmahir03@gmail.com">
-          <span class="icon">✉</span> mahfuzurrahmanmahir03@gmail.com
-        </a>
-        <a class="about-link" href="https://www.linkedin.com/in/mahfuzur-rahman022/" target="_blank">
-          <span class="icon">in</span> linkedin.com/in/mahfuzur-rahman022
-        </a>
-        <a class="about-link" href="https://github.com/mahfuzur-rahman22" target="_blank">
-          <span class="icon">gh</span> github.com/mahfuzur-rahman22
-        </a>
-        <a class="about-link">
-          <span class="icon">📍</span> Dhaka, Bangladesh
-        </a>
+        <a class="about-link" href="mailto:mahfuzurrahmanmahir03@gmail.com">✉ mahfuzurrahmanmahir03@gmail.com</a>
+        <a class="about-link" href="tel:+8801886756372">📞 +880 1886-756372</a>
+        <a class="about-link" href="https://www.linkedin.com/in/mahfuzur-rahman022/" target="_blank">in linkedin.com/in/mahfuzur-rahman022</a>
+        <a class="about-link" href="https://github.com/mahfuzur-rahman22" target="_blank">⌥ github.com/mahfuzur-rahman22</a>
+        <a class="about-link">📍 Mirpur-12, Dhaka, Bangladesh</a>
       </div>
     </div>
 
-    <div>
+    <div class="reveal">
       <div class="about-card">
-        <img src="IMG_6833.PNG" alt="Mahfuzur Rahman" style="width:100%;aspect-ratio:3/3;object-fit:cover;object-position:center top;display:block;" />
+        <img src="IMG_6833.PNG" alt="Mahfuzur Rahman" />
         <div class="about-card-body">
           <div class="about-card-name">Mahfuzur Rahman</div>
           <div class="about-card-role">Graduate Aeronautical Engineer</div>
@@ -626,6 +489,7 @@
           <div class="about-card-item"><span>CGPA</span><span>3.80 / 4.00</span></div>
           <div class="about-card-item"><span>Thesis</span><span>MMC Thermo-Mechanics</span></div>
           <div class="about-card-item"><span>Supervisor</span><span>Dr. S. R. Ahmed, BUET</span></div>
+          <div class="about-card-item"><span>English</span><span>C1 Advanced (EF SET)</span></div>
         </div>
       </div>
     </div>
@@ -635,49 +499,43 @@
 <!-- ══ RESEARCH INTERESTS ══ -->
 <section class="section" id="interests">
   <p class="section-eyebrow">What I Work On</p>
-  <h2 class="section-title">Research Interests</h2>
-  <div class="section-rule"></div>
-  <p class="section-sub">
+  <h2 class="section-title reveal">Research Interests</h2>
+  <div class="section-rule reveal"></div>
+  <p class="section-sub reveal">
     The problems that pull me are ones where material behaviour, structural
-    mechanics, and computational modelling intersect — particularly in
+    mechanics, and computational modelling intersect, particularly in
     aerospace contexts where getting it wrong is not an option.
   </p>
   <div class="interests-grid">
-    <div class="interest-card">
+    <div class="interest-card reveal">
       <div class="interest-icon">🧱</div>
       <div class="interest-title">Composite &amp; Multi-Material Structures</div>
-      <div class="interest-desc">
-        How fibre-reinforced and metal matrix composites carry load,
-        accumulate damage, and fail — especially under combined loading
-        conditions representative of real aerospace service environments.
-      </div>
+      <div class="interest-desc">How fibre-reinforced and metal matrix composites carry load, accumulate damage, and fail, especially under combined loading conditions representative of real aerospace service environments.</div>
     </div>
-    <div class="interest-card">
+    <div class="interest-card reveal">
       <div class="interest-icon">🌡️</div>
       <div class="interest-title">Thermo-Mechanical Coupling</div>
-      <div class="interest-desc">
-        The interaction between thermal gradients and mechanical stress fields
-        in anisotropic materials — a critical design challenge for structures
-        in high-temperature aerospace and propulsion applications.
-      </div>
+      <div class="interest-desc">The interaction between thermal gradients and mechanical stress fields in anisotropic materials, a critical design challenge for structures in high-temperature aerospace and propulsion applications.</div>
     </div>
-    <div class="interest-card">
+    <div class="interest-card reveal">
       <div class="interest-icon">💻</div>
       <div class="interest-title">Computational Structural Mechanics</div>
-      <div class="interest-desc">
-        Building finite difference and finite element frameworks — writing
-        numerical solvers in MATLAB, validating against FEA tools such as
-        ANSYS and ABAQUS — to study problems that resist closed-form solutions.
-      </div>
+      <div class="interest-desc">Building finite difference and finite element frameworks, writing numerical solvers in MATLAB and Python, validating against FEA tools such as ANSYS and ABAQUS — to study problems that resist closed-form solutions.</div>
     </div>
-    <div class="interest-card">
+    <div class="interest-card reveal">
       <div class="interest-icon">✈️</div>
       <div class="interest-title">Aerospace Structural Design</div>
-      <div class="interest-desc">
-        Applying structural and aerodynamic analysis to real airframe design —
-        balancing weight, stiffness, and strength in competition and
-        research-grade aircraft from concept through physical build.
-      </div>
+      <div class="interest-desc">Applying structural and aerodynamic analysis to real airframe design, balancing weight, stiffness, and strength in competition and research-grade aircraft from concept through physical build.</div>
+    </div>
+    <div class="interest-card reveal">
+      <div class="interest-icon">🚁</div>
+      <div class="interest-title">Fixed-Wing UAV Design</div>
+      <div class="interest-desc">Aerodynamic design, structural sizing, and manufacturing of fixed-wing UAVs, integrating XFLR5, AVL, and composite fabrication techniques in competition and research contexts.</div>
+    </div>
+    <div class="interest-card reveal">
+      <div class="interest-icon">🔬</div>
+      <div class="interest-title">CFD &amp; Numerical Flow Modelling</div>
+      <div class="interest-desc">Computational fluid dynamics and numerical modelling of aerospace flow fields, understanding how airflows interact with structural surfaces under varying flight conditions.</div>
     </div>
   </div>
 </section>
@@ -685,23 +543,19 @@
 <!-- ══ PROJECTS ══ -->
 <section class="section" id="projects">
   <p class="section-eyebrow">Selected Work</p>
-  <h2 class="section-title">Projects</h2>
-  <div class="section-rule"></div>
+  <h2 class="section-title reveal">Projects</h2>
+  <div class="section-rule reveal"></div>
 
-  <!-- Thesis — featured card -->
-  <div class="project-card thesis-card">
+  <!-- Thesis -->
+  <div class="project-card thesis-card reveal">
     <div class="project-meta">
       <span class="status-badge complete">✓ Thesis Complete</span>
       <span class="meta-sep">·</span>
       <span class="meta-year">2025 – 2026</span>
     </div>
     <div class="project-title">Thermomechanical Behaviour of Anisotropic Metal Matrix Composite Panels</div>
-    <div class="project-role">
-      Undergraduate Thesis &nbsp;·&nbsp;
-      Supervisor: Prof. Dr. Shaikh Reaz Ahmed, Dept. of Mechanical Engineering, BUET
-    </div>
+    <div class="project-role">Undergraduate Thesis &nbsp;·&nbsp; Supervisor: Prof. Dr. Shaikh Reaz Ahmed, Dept. of Mechanical Engineering, BUET</div>
 
-    <!-- Problem → Method → Outcome in structured blocks -->
     <div class="thesis-blocks">
       <div class="thesis-block">
         <span class="tblock-label">Problem</span>
@@ -709,26 +563,21 @@
       </div>
       <div class="thesis-block">
         <span class="tblock-label">Method</span>
-        <span class="tblock-text">Built a <strong>finite-difference computational framework</strong> in MATLAB from first principles to solve the coupled displacement–stress field across anisotropic composite panel geometries under prescribed thermal and mechanical boundary conditions.</span>
+        <span class="tblock-text">Built a <strong>displacement-function-based finite-difference computational framework</strong> in MATLAB to solve the coupled thermoelastic field (stress, displacement, temperature) across orthotropic composite panel geometries under prescribed boundary conditions.</span>
       </div>
       <div class="thesis-block">
         <span class="tblock-label">Outcome</span>
-        <span class="tblock-text">Characterised stress concentration zones and failure-prone regions as functions of fibre volume fraction and temperature level. Results validated against ANSYS thermal–structural FEM simulations, confirming close agreement across the plate width.</span>
+        <span class="tblock-text">Solver accuracy exceeds ABAQUS FEM benchmarks under equivalent boundary conditions. Characterised stress concentration zones as functions of fibre volume fraction and temperature level — validated against ANSYS thermal–structural simulations.</span>
       </div>
     </div>
 
-    <!-- Figures -->
     <div class="thesis-figs">
-      <figure class="thesis-fig">
-        <img src="assets/img/fig_validation.png"
-             alt="Figure 3.8: Axial stress distribution along the normalised plate width — FDM vs ABAQUS (FEM) comparison at the left edge and mid-length section, showing near-identical results and confirming framework validity."
-             loading="lazy" />
-        <figcaption>FDM vs. ABAQUS validation — axial stress σ<sub>xx</sub> along normalised plate width</figcaption>
+      <figure class="thesis-fig" data-lightbox="assets/img/fig_validation.png" data-caption="FDM vs. ABAQUS validation — axial stress σₓₓ along normalised plate width">
+        <img src="assets/img/fig_validation.png" alt="FDM vs ABAQUS validation" loading="lazy" />
+        <figcaption>FDM vs. ABAQUS validation; axial stress σ<sub>xx</sub> along normalised plate width</figcaption>
       </figure>
-      <figure class="thesis-fig">
-        <img src="assets/img/fig_stress.png"
-             alt="Figure 4.3: Lateral stress and shear stress distributions along the normalised plate width at the mid-length section for five prescribed left-end temperatures, Al–B4C MMC plate."
-             loading="lazy" />
+      <figure class="thesis-fig" data-lightbox="assets/img/fig_stress.png" data-caption="Lateral & shear stress at mid-length for five temperature levels">
+        <img src="assets/img/fig_stress.png" alt="Stress distributions" loading="lazy" />
         <figcaption>Lateral &amp; shear stress distributions at mid-length for five temperature levels</figcaption>
       </figure>
     </div>
@@ -744,67 +593,57 @@
     </div>
 
     <div style="margin-top:1.4rem;">
-      <a class="btn btn-primary" href="assets/docs/Mahfuzur_Rahman_Thesis.pdf" target="_blank" download
-         style="font-size:0.85rem; padding:9px 18px;">
-        ⬇ Download Thesis (PDF)
+      <a class="btn btn-primary" href="assets/docs/Mahfuzur_Rahman_Thesis.pdf" target="_blank" style="font-size:.85rem;padding:9px 18px;">
+        📄 Preview Thesis (PDF)
       </a>
     </div>
   </div>
 
-  <!-- DBF 2026 — standard card -->
-  <div class="project-card">
+  <!-- DBF 2026 -->
+  <div class="project-card reveal">
     <div class="project-meta">
       <span class="status-badge competition">🏆 Competition · Team Lead</span>
       <span class="meta-sep">·</span>
       <span class="meta-year">2025 – 2026</span>
     </div>
     <div class="project-title">Project HeisenBird — AIAA Design/Build/Fly 2026</div>
-    <div class="project-role">Team Lead · Wichita, Kansas, USA · 18th Worldwide Proposal · 17th Worldwide Design Report</div>
+    <div class="project-role">Team Lead · Wichita, Kansas, USA · 58th Worldwide Overall · 17th Worldwide Design Report (1st Asia) · 18th Worldwide Proposal</div>
     <div class="project-desc">
-      Led the full engineering lifecycle of a competition UAV — from aerodynamic sizing and
-      structural design through composite fabrication and flight testing. Managed a
-      multidisciplinary team across all phases and authored the internationally
-      peer-evaluated <strong>Proposal Report and Design Report</strong>, both placing
-      in the top 20 worldwide. The project demanded integrating aerodynamic performance
-      targets with structural weight and stiffness constraints — a representative
-      aerospace design trade-off problem.
+      Led the full engineering lifecycle of a competition UAV (Banner Towing Bush Plane theme) —
+      from aerodynamic sizing in XFLR5 and AVL through structural design in SolidWorks,
+      composite fabrication, and flight testing. Directed a 42-member team and authored the
+      internationally peer-evaluated <strong>Proposal and Design Reports</strong>, both placing
+      in the global top 20.
     </div>
     <div class="tag-row">
-      <span class="tag">XFLR5</span>
-      <span class="tag">AVL</span>
-      <span class="tag">SolidWorks</span>
-      <span class="tag">Composite Fabrication</span>
-      <span class="tag">Aerodynamic Design</span>
-      <span class="tag">Structural Sizing</span>
-      <span class="tag">Flight Testing</span>
+      <span class="tag">XFLR5</span><span class="tag">AVL</span><span class="tag">SolidWorks</span>
+      <span class="tag">Composite Fabrication</span><span class="tag">Aerodynamic Design</span>
+      <span class="tag">Structural Sizing</span><span class="tag">Team Leadership</span>
     </div>
     <a class="proj-link" href="https://www.linkedin.com/in/mahfuzur-rahman022/details/projects/" target="_blank">View on LinkedIn →</a>
   </div>
 
   <!-- DBF 2025 -->
-  <div class="project-card">
+  <div class="project-card reveal">
     <div class="project-meta">
       <span class="status-badge competition">🥇 Competition · Manufacturing Lead</span>
       <span class="meta-sep">·</span>
       <span class="meta-year">2024 – 2025</span>
     </div>
-    <div class="project-title">AIAA Design/Build/Fly 2025 Competition Aircraft</div>
+    <div class="project-title">AIAA Design/Build/Fly 2025 — Akashtori 2.0</div>
     <div class="project-role">Manufacturing Lead &amp; Flyoff Member · Tucson, Arizona, USA · 1st in Asia — Flight Mission · 39th Worldwide Overall</div>
     <div class="project-desc">
-      Led fabrication and structural assembly of the competition aircraft,
-      ensuring dimensional accuracy and compliance with weight and structural
-      requirements throughout the build cycle. On competition day in Tucson,
-      served as Flyoff Member — managing pre-flight checks and real-time
-      mission assessment. The team's <strong>flight performance ranked 1st across
-      all Asian teams</strong>, a direct outcome of manufacturing quality and
-      pre-flight preparation.
+      Managed the composite manufacturing workflow — glass-fibre vacuum-bag layup, rib
+      fabrication, and structural assembly — ensuring all airframe components met dimensional
+      and weight budget requirements. Supported aerodynamic analysis in XFLR5 and AVL;
+      performed structural assessments in ANSYS and ABAQUS for wing spar and fuselage
+      under critical load cases. Served as Flyoff Member on competition day in Tucson —
+      the team's <strong>flight performance ranked 1st across all Asian teams</strong>.
     </div>
     <div class="tag-row">
-      <span class="tag">Composite Fabrication</span>
-      <span class="tag">Structural Assembly</span>
-      <span class="tag">Weight Compliance</span>
-      <span class="tag">Pre-flight Protocols</span>
-      <span class="tag">Flight Operations</span>
+      <span class="tag">Composite Fabrication</span><span class="tag">Vacuum-Bag Layup</span>
+      <span class="tag">ANSYS / ABAQUS</span><span class="tag">XFLR5</span>
+      <span class="tag">Structural Assembly</span><span class="tag">Flight Operations</span>
     </div>
   </div>
 </section>
@@ -812,13 +651,20 @@
 <!-- ══ SKILLS ══ -->
 <section class="section" id="skills">
   <p class="section-eyebrow">Technical Profile</p>
-  <h2 class="section-title">Skills &amp; Tools</h2>
-  <div class="section-rule"></div>
+  <h2 class="section-title reveal">Skills &amp; Tools</h2>
+  <div class="section-rule reveal"></div>
   <div class="skills-grid">
-    <div class="skill-block">
+    <div class="skill-block reveal">
+      <h4>Programming</h4>
+      <div class="skill-chips">
+        <span class="chip">Python</span>
+        <span class="chip">MATLAB</span>
+        <span class="chip">C</span>
+      </div>
+    </div>
+    <div class="skill-block reveal">
       <h4>Simulation &amp; CAD</h4>
       <div class="skill-chips">
-        <span class="chip">MATLAB</span>
         <span class="chip">ANSYS</span>
         <span class="chip">ABAQUS</span>
         <span class="chip">SolidWorks</span>
@@ -826,26 +672,33 @@
         <span class="chip">AVL</span>
       </div>
     </div>
-    <div class="skill-block">
+    <div class="skill-block reveal">
       <h4>Numerical Methods</h4>
       <div class="skill-chips">
-        <span class="chip">Finite Element Method</span>
         <span class="chip">Finite Difference Method</span>
+        <span class="chip">Finite Element Method</span>
         <span class="chip">Numerical Analysis</span>
-        <span class="chip">Structural Solvers</span>
       </div>
     </div>
-    <div class="skill-block">
+    <div class="skill-block reveal">
       <h4>Mechanics</h4>
       <div class="skill-chips">
         <span class="chip">Composite Mechanics</span>
         <span class="chip">Thermal Stress Analysis</span>
         <span class="chip">Structural Analysis</span>
-        <span class="chip">Aerodynamics</span>
-        <span class="chip">Fatigue &amp; Failure</span>
+        <span class="chip">Applied Aerodynamics</span>
       </div>
     </div>
-    <div class="skill-block">
+    <div class="skill-block reveal">
+      <h4>Manufacturing</h4>
+      <div class="skill-chips">
+        <span class="chip">Composite Fabrication</span>
+        <span class="chip">Vacuum-Bag Layup</span>
+        <span class="chip">Glass-Fibre Laminate</span>
+        <span class="chip">Structural Assembly</span>
+      </div>
+    </div>
+    <div class="skill-block reveal">
       <h4>Aviation &amp; MRO</h4>
       <div class="skill-chips">
         <span class="chip">CAMO / AMO</span>
@@ -855,7 +708,7 @@
         <span class="chip">Airworthiness Directives</span>
       </div>
     </div>
-    <div class="skill-block">
+    <div class="skill-block reveal">
       <h4>Documentation</h4>
       <div class="skill-chips">
         <span class="chip">LaTeX</span>
@@ -863,53 +716,124 @@
         <span class="chip">Microsoft Office</span>
       </div>
     </div>
-    <div class="skill-block">
-      <h4>Certifications</h4>
+    <div class="skill-block reveal">
+      <h4>Languages</h4>
       <div class="skill-chips">
-        <span class="chip">MATLAB Onramp</span>
-        <span class="chip">Simulink Onramp</span>
+        <span class="chip">Bangla (Native)</span>
+        <span class="chip">English (C1 Advanced)</span>
       </div>
     </div>
+  </div>
+</section>
+
+<!-- ══ CERTIFICATIONS ══ -->
+<section class="section" id="certifications">
+  <p class="section-eyebrow">Credentials</p>
+  <h2 class="section-title reveal">Certifications</h2>
+  <div class="section-rule reveal"></div>
+  <p class="section-sub reveal">Verified credentials across engineering tools, language proficiency, and applied computing.</p>
+
+  <div class="certs-grid">
+
+    <div class="cert-card reveal">
+      <div class="cert-icon">🐍</div>
+      <div class="cert-title">Python</div>
+      <div class="cert-org">Kaggle</div>
+      <div class="cert-desc">Fundamentals of Python programming — data structures, control flow, functions — as applied to data analysis workflows.</div>
+      <div class="cert-actions">
+        <a class="cert-btn primary" href="assets/img/cert_python.png" target="_blank">🔍 Preview Certificate</a>
+      </div>
+    </div>
+
+    <div class="cert-card reveal">
+      <div class="cert-icon">🤖</div>
+      <div class="cert-title">Prompt Engineering for Everyone</div>
+      <div class="cert-org">Cognitive Class (IBM)</div>
+      <div class="cert-desc">Principles of effective prompt design for large language models — structured querying, chain-of-thought reasoning, and applied AI workflows.</div>
+      <div class="cert-actions">
+        <a class="cert-btn primary" href="assets/docs/cert_prompt_engineering.pdf" target="_blank">🔍 Preview Certificate</a>
+      </div>
+    </div>
+
+    <div class="cert-card reveal">
+      <div class="cert-icon">📊</div>
+      <div class="cert-title">MATLAB Onramp</div>
+      <div class="cert-org">MathWorks</div>
+      <div class="cert-desc">Proficiency in MATLAB fundamentals — arrays, scripts, functions, and visualisation — with application to engineering computation.</div>
+      <div class="cert-actions">
+        <a class="cert-btn primary" href="assets/docs/cert_matlab.pdf" target="_blank">🔍 Preview Certificate</a>
+      </div>
+    </div>
+
+    <div class="cert-card reveal">
+      <div class="cert-icon">⚙️</div>
+      <div class="cert-title">Simulink Onramp</div>
+      <div class="cert-org">MathWorks</div>
+      <div class="cert-desc">Model-based design using Simulink — block diagrams, simulation, and system modelling for engineering dynamic systems.</div>
+      <div class="cert-actions">
+        <a class="cert-btn primary" href="assets/docs/cert_simulink.pdf" target="_blank">🔍 Preview Certificate</a>
+      </div>
+    </div>
+
+    <div class="cert-card reveal">
+      <div class="cert-icon">🌐</div>
+      <div class="cert-title">EF SET English Certificate — C1 Advanced</div>
+      <div class="cert-org">EF Standard English Test (CEFR)</div>
+      <div class="cert-desc">C1 Advanced proficiency on the Common European Framework of Reference — full professional working proficiency in English.</div>
+      <div class="cert-actions">
+        <a class="cert-btn primary" href="assets/docs/cert_efset.pdf" target="_blank">🔍 Preview Certificate</a>
+      </div>
+    </div>
+
   </div>
 </section>
 
 <!-- ══ EXPERIENCE ══ -->
 <section class="section" id="experience">
   <p class="section-eyebrow">Career</p>
-  <h2 class="section-title">Experience</h2>
-  <div class="section-rule"></div>
+  <h2 class="section-title reveal">Experience</h2>
+  <div class="section-rule reveal"></div>
   <div class="timeline">
 
-    <div class="tl-item">
+    <div class="tl-item reveal">
       <div class="tl-dot"></div>
       <div class="tl-date">May 2025 – Jun 2025</div>
-      <div class="tl-title">On-the-Job Training — Aeronautical Engineer Intern</div>
+      <div class="tl-title">Industrial Trainee — Aeronautical Engineer</div>
       <div class="tl-org">US-Bangla Airlines Ltd. · CAMO &amp; AMO Departments</div>
       <ul class="tl-body">
-        <li>Reviewed maintenance documentation, airworthiness directives, and technical compliance reports for ATR 72-600 and Boeing 737-800 fleets.</li>
-        <li>Received introductory training in MEL, MCC, PPC, and Non-Destructive Testing (NDT).</li>
-        <li>Gained practical exposure to Safety Management System (SMS) documentation and SRM processes in daily airline operations.</li>
+        <li>Reviewed Airworthiness Directives (ADs), MEL, MCC, and PPC documentation for ATR 72-600 and Boeing 737-800 fleets.</li>
+        <li>Observed NDT procedures and SRM documentation; gained exposure to SMS processes within a Part-145 approved environment.</li>
       </ul>
     </div>
 
-    <div class="tl-item">
-      <div class="tl-dot"></div>
-      <div class="tl-date">Jun 2025 – Jun 2026</div>
-      <div class="tl-title">Vice President — Administration</div>
-      <div class="tl-org">MIST Aeronautics and Astronautics Club (MAAC)</div>
-      <ul class="tl-body">
-        <li>Oversees club administration, event management, and member coordination for MIST's primary aerospace student society.</li>
-        <li>Previously: Executive – Administration (Sep 2024 – Jun 2025) and Event Manager (May 2023 – Sep 2024).</li>
-      </ul>
-    </div>
-
-    <div class="tl-item">
+    <div class="tl-item reveal">
       <div class="tl-dot"></div>
       <div class="tl-date">Jul 2025 – Jun 2026</div>
       <div class="tl-title">Department Representative — Aeronautical Engineering</div>
       <div class="tl-org">MIST · Directorate of Student Welfare</div>
       <ul class="tl-body">
-        <li>Elected student representative — formal bridge between AE students, the Head of Department, and university administration.</li>
+        <li>Elected formal liaison between the AE student body and the Head of Department — academic scheduling, curriculum feedback, and co-curricular coordination.</li>
+      </ul>
+    </div>
+
+    <div class="tl-item reveal">
+      <div class="tl-dot"></div>
+      <div class="tl-date">Jun 2025 – Jun 2026</div>
+      <div class="tl-title">Vice President — Administration</div>
+      <div class="tl-org">MIST Aeronautics and Astronautics Club (MAAC)</div>
+      <ul class="tl-body">
+        <li>Supervised administrative operations; coordinated inter-departmental correspondence and the annual national aeromodelling competition.</li>
+        <li>Previously: Executive – Administration (Sep 2024 – Jun 2025) and Event Manager (May 2023 – Sep 2024).</li>
+      </ul>
+    </div>
+
+    <div class="tl-item reveal">
+      <div class="tl-dot dim"></div>
+      <div class="tl-date">Jun 2024 – Jun 2025</div>
+      <div class="tl-title">Director of Event Management</div>
+      <div class="tl-org">MIST Drama and Film Society (MDFS)</div>
+      <ul class="tl-body">
+        <li>Oversaw planning and execution of theatrical and film-screening events; managed a 20-member event crew.</li>
       </ul>
     </div>
 
@@ -919,42 +843,60 @@
 <!-- ══ HONOURS ══ -->
 <section class="section" id="honours">
   <p class="section-eyebrow">Recognition</p>
-  <h2 class="section-title">Honours &amp; Awards</h2>
-  <div class="section-rule"></div>
+  <h2 class="section-title reveal">Honours &amp; Awards</h2>
+  <div class="section-rule reveal"></div>
   <div class="honours-grid">
 
-    <div class="honour-card">
+    <div class="honour-card reveal">
       <div class="honour-icon">🎓</div>
       <div class="honour-body">
         <div class="honour-title">Dean's List of Honour — 2023 &amp; 2024</div>
         <div class="honour-org">Military Institute of Science and Technology</div>
-        <div class="honour-desc">CGPA 3.80 / 4.00 across seven semesters.</div>
+        <div class="honour-desc">CGPA 3.80 / 4.00 — awarded for GPA exceeding 3.75 in each academic year.</div>
       </div>
     </div>
 
-    <div class="honour-card">
+    <div class="honour-card reveal">
       <div class="honour-icon">🏛️</div>
       <div class="honour-body">
-        <div class="honour-title">MIST Scholarship — 2025 (Spring)</div>
+        <div class="honour-title">MIST Merit Scholarship — Spring 2025</div>
         <div class="honour-org">Military Institute of Science and Technology</div>
-        <div class="honour-desc">Merit-based institutional scholarship awarded for academic excellence.</div>
+        <div class="honour-desc">Ranked 3rd in class based on academic performance.</div>
       </div>
     </div>
 
-    <div class="honour-card">
+    <div class="honour-card reveal">
+      <div class="honour-icon">🌍</div>
+      <div class="honour-body">
+        <div class="honour-title">17th Worldwide — Design Report (AIAA DBF 2026)</div>
+        <div class="honour-org">AIAA · 1st in Asia</div>
+        <div class="honour-desc">Out of 175 competing universities worldwide, Wichita, Kansas.</div>
+      </div>
+    </div>
+
+    <div class="honour-card reveal">
+      <div class="honour-icon">🥇</div>
+      <div class="honour-body">
+        <div class="honour-title">1st in Asia — Flight Mission Score (AIAA DBF 2025)</div>
+        <div class="honour-org">AIAA · 39th Worldwide Overall</div>
+        <div class="honour-desc">Out of 112 competing universities worldwide, Tucson, Arizona.</div>
+      </div>
+    </div>
+
+    <div class="honour-card reveal">
       <div class="honour-icon">📜</div>
       <div class="honour-body">
         <div class="honour-title">Board Scholarship (Talentpool) — SSC 2019</div>
-        <div class="honour-org">Chittagong Board · GPA 5.00 / 5.00</div>
+        <div class="honour-org">Chittagong Education Board · GPA 5.00 / 5.00</div>
         <div class="honour-desc">Chittagong Collegiate School.</div>
       </div>
     </div>
 
-    <div class="honour-card">
+    <div class="honour-card reveal">
       <div class="honour-icon">📜</div>
       <div class="honour-body">
         <div class="honour-title">Board Scholarship (General) — HSC 2021</div>
-        <div class="honour-org">Chittagong Board · GPA 5.00 / 5.00</div>
+        <div class="honour-org">Chittagong Education Board · GPA 5.00 / 5.00</div>
         <div class="honour-desc">Chittagong College.</div>
       </div>
     </div>
@@ -964,9 +906,9 @@
 
 <!-- ══ CONTACT ══ -->
 <section class="section" id="contact">
-  <div class="contact-wrap">
+  <div class="contact-wrap reveal">
     <div class="contact-available">
-      <span class="pulse" style="width:7px;height:7px;border-radius:50%;background:var(--green);animation:pulse 2s infinite;display:inline-block;"></span>
+      <span class="pulse-dot"></span>
       Available for Research Opportunities &amp; Graduate Applications
     </div>
     <h2 class="contact-title">Let's Connect</h2>
@@ -979,27 +921,171 @@
     </a>
     <div class="contact-links-row">
       <a class="clink" href="https://www.linkedin.com/in/mahfuzur-rahman022/" target="_blank">
-        <svg width="14" height="14" fill="currentColor" viewBox="0 0 24 24"><path d="M20.45 20.45h-3.56v-5.57c0-1.33-.03-3.04-1.85-3.04-1.85 0-2.13 1.44-2.13 2.94v5.67H9.35V9h3.41v1.56h.05c.48-.9 1.63-1.85 3.35-1.85 3.58 0 4.24 2.36 4.24 5.43v6.31zM5.34 7.43a2.07 2.07 0 1 1 0-4.14 2.07 2.07 0 0 1 0 4.14zM7.12 20.45H3.56V9h3.56v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.73v20.54C0 23.23.79 24 1.77 24h20.45C23.2 24 24 23.23 24 22.27V1.73C24 .77 23.2 0 22.22 0z"/></svg>
+        <svg width="14" height="14" fill="currentColor" viewBox="0 0 24 24"><path d="M20.45 20.45h-3.56v-5.57c0-1.33-.03-3.04-1.85-3.04-1.85 0-2.13 1.44-2.13 2.94v5.67H9.35V9h3.41v1.56h.05c.48-.9 1.63-1.85 3.35-1.85 3.58 0 4.24 2.36 4.24 5.43v6.31zM5.34 7.43a2.07 2.07 0 1 1 0-4.14 2.07 2.07 0 0 1 0 4.14zM7.12 20.45H3.56V9h3.56v11.45zM22.22 0H1.77C.79 0 .77 1.73v20.54C0 23.23.79 24 1.77 24h20.45C23.2 24 24 23.23 24 22.27V1.73C24 .77 23.2 0 22.22 0z"/></svg>
         LinkedIn
       </a>
       <a class="clink" href="https://github.com/mahfuzur-rahman22" target="_blank">
         <svg width="14" height="14" fill="currentColor" viewBox="0 0 24 24"><path d="M12 .3a12 12 0 0 0-3.79 23.4c.6.1.82-.26.82-.58v-2.02c-3.34.72-4.04-1.61-4.04-1.61-.55-1.39-1.34-1.76-1.34-1.76-1.09-.74.08-.73.08-.73 1.2.08 1.84 1.24 1.84 1.24 1.07 1.83 2.8 1.3 3.49 1 .1-.78.42-1.31.76-1.61-2.67-.3-5.47-1.33-5.47-5.93 0-1.31.47-2.38 1.24-3.22-.14-.3-.54-1.52.1-3.18 0 0 1.01-.32 3.3 1.23a11.5 11.5 0 0 1 6 0c2.29-1.55 3.3-1.23 3.3-1.23.65 1.66.24 2.88.12 3.18.77.84 1.23 1.91 1.23 3.22 0 4.61-2.81 5.63-5.48 5.92.43.37.81 1.1.81 2.22v3.29c0 .32.22.69.83.57A12 12 0 0 0 12 .3z"/></svg>
         GitHub
       </a>
-      <a class="clink" href="assets/docs/Mahfuzur_Rahman_CV.pdf" target="_blank" download>
-        ⬇ Download CV (PDF)
+      <a class="clink" href="assets/docs/CV_Mahfuzur_Rahman.pdf" target="_blank">
+        📄 Preview CV (PDF)
       </a>
-      <a class="clink">
-        📍 Dhaka, Bangladesh
-      </a>
+      <a class="clink" style="cursor:default;">📍 Dhaka, Bangladesh</a>
     </div>
   </div>
 </section>
 
 <footer>
-  <span>© 2026 Mahfuzur Rahman</span> · Graduate Aeronautical Engineer · MIST, Dhaka ·
-  <span>Built with HTML &amp; CSS · Hosted on GitHub Pages</span>
+  <span>Mahfuzur Rahman</span> · Aeronautical Engineer · MIST, Dhaka ·
+  <a href="mailto:mahfuzurrahmanmahir03@gmail.com" style="color:var(--muted);">mahfuzurrahmanmahir03@gmail.com</a>
 </footer>
 
+<script>
+(function() {
+  const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* ── STARFIELD ── */
+  const canvas = document.getElementById('starfield');
+  const ctx = canvas.getContext('2d');
+  let stars = [];
+
+  function resizeCanvas() {
+    canvas.width  = window.innerWidth;
+    canvas.height = window.innerHeight;
+  }
+
+  function initStars() {
+    stars = [];
+    const count = Math.floor((canvas.width * canvas.height) / 8000);
+    for (let i = 0; i < count; i++) {
+      stars.push({
+        x:     Math.random() * canvas.width,
+        y:     Math.random() * canvas.height,
+        r:     Math.random() * 1.3 + 0.2,
+        alpha: Math.random(),
+        speed: Math.random() * 0.004 + 0.001,
+        phase: Math.random() * Math.PI * 2
+      });
+    }
+  }
+
+  function drawStars(t) {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    stars.forEach(s => {
+      const a = reduced ? 0.35 : 0.2 + 0.6 * (0.5 + 0.5 * Math.sin(s.phase + t * s.speed));
+      ctx.beginPath();
+      ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
+      ctx.fillStyle = `rgba(180,210,255,${a})`;
+      ctx.fill();
+    });
+  }
+
+  resizeCanvas(); initStars();
+  window.addEventListener('resize', () => { resizeCanvas(); initStars(); });
+
+  if (!reduced) {
+    (function loop(t) { drawStars(t); requestAnimationFrame(loop); })(0);
+  } else {
+    drawStars(0);
+  }
+
+  /* ── CUSTOM CURSOR ── */
+  const dot  = document.getElementById('cur-dot');
+  const ring = document.getElementById('cur-ring');
+  let rx = 0, ry = 0, mx = 0, my = 0;
+
+  if (!reduced) {
+    document.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; dot.style.left = mx+'px'; dot.style.top = my+'px'; });
+    (function lerpRing() {
+      rx += (mx - rx) * 0.12;
+      ry += (my - ry) * 0.12;
+      ring.style.left = rx+'px'; ring.style.top = ry+'px';
+      requestAnimationFrame(lerpRing);
+    })();
+    document.querySelectorAll('a,button,.cert-card,.interest-card,.project-card,.honour-card,.stat-tab,.thesis-fig').forEach(el => {
+      el.addEventListener('mouseenter', () => document.body.classList.add('cursor-hover'));
+      el.addEventListener('mouseleave', () => document.body.classList.remove('cursor-hover'));
+    });
+  } else {
+    dot.style.display = 'none';
+    ring.style.display = 'none';
+    document.body.style.cursor = 'auto';
+  }
+
+  /* ── NAV SCROLL ── */
+  const nav = document.getElementById('nav');
+  window.addEventListener('scroll', () => {
+    nav.classList.toggle('scrolled', window.scrollY > 30);
+  }, { passive: true });
+
+  /* ── HAMBURGER ── */
+  const ham  = document.getElementById('hamburger');
+  const navL = document.getElementById('nav-links');
+  ham.addEventListener('click', () => {
+    ham.classList.toggle('open');
+    navL.classList.toggle('open');
+  });
+  navL.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
+    ham.classList.remove('open'); navL.classList.remove('open');
+  }));
+
+  /* ── SCROLL REVEAL ── */
+  const io = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); io.unobserve(e.target); } });
+  }, { threshold: 0.12 });
+  document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+  /* ── STAT COUNTERS ── */
+  function animateCounter(el) {
+    if (el.dataset.static) return;
+    const target   = parseFloat(el.dataset.target);
+    const decimals = parseInt(el.dataset.decimals || 0);
+    const suffix   = el.dataset.suffix || '';
+    const duration = 1600;
+    const start    = performance.now();
+    if (reduced) { el.textContent = target.toFixed(decimals) + suffix; return; }
+    (function tick(now) {
+      const p = Math.min((now - start) / duration, 1);
+      const ease = 1 - Math.pow(1 - p, 3);
+      const val  = target * ease;
+      el.textContent = val.toFixed(decimals) + suffix;
+      if (p < 1) requestAnimationFrame(tick);
+    })(start);
+  }
+
+  const statIO = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.querySelectorAll('.stat-num[data-target]').forEach(animateCounter);
+        statIO.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.3 });
+  const tabs = document.getElementById('stat-tabs');
+  if (tabs) statIO.observe(tabs);
+
+  /* ── LIGHTBOX ── */
+  const lb      = document.getElementById('lightbox');
+  const lbImg   = document.getElementById('lb-img');
+  const lbCap   = document.getElementById('lb-caption');
+  const lbClose = document.getElementById('lb-close');
+
+  document.querySelectorAll('[data-lightbox]').forEach(el => {
+    el.addEventListener('click', () => {
+      lbImg.src = el.dataset.lightbox;
+      lbImg.alt = el.dataset.caption || '';
+      lbCap.textContent = el.dataset.caption || '';
+      lb.classList.add('open');
+      document.body.style.overflow = 'hidden';
+    });
+  });
+  function closeLb() { lb.classList.remove('open'); document.body.style.overflow = ''; }
+  lbClose.addEventListener('click', closeLb);
+  lb.addEventListener('click', e => { if (e.target === lb) closeLb(); });
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLb(); });
+
+})();
+</script>
 </body>
 </html>
