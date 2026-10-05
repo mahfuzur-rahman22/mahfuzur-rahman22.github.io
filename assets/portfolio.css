@@ -12,6 +12,20 @@ main{max-width:1064px;padding:58px 0 80px;margin:0 auto;min-height:70vh}.home-la
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{transition:none!important;animation:none!important}}
 .section-title,.contact-title{font-size:30px;font-weight:500;letter-spacing:-.5px}
 @media(max-width:760px){.section-title,.contact-title{font-size:27px}}
-p {
+/* Justify the biography paragraphs */
+.introduction > p {
   text-align: justify;
+  hyphens: auto;
+}
+
+/* Keep the opening paragraph naturally spaced */
+.introduction > p.lead {
+  text-align: left;
+}
+
+/* Improve readability on phones */
+@media (max-width: 760px) {
+  .introduction > p {
+    text-align: left;
+  }
 }
